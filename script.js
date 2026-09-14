@@ -103,7 +103,7 @@ async function loadQuestions() {
     try {
 
         const response =
-            await fetch("data/questions.json");
+            await fetch("data_questions.json");
 
         if (!response.ok) {
 
