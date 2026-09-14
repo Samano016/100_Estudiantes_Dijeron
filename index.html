@@ -1,452 +1,168 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>100 Estudiantes Dijeron</title>
-
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>100 Estudiantes Dijeron</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- =====================================================
-         START SCREEN
-         ===================================================== -->
+  <div class="app">
 
-    <section id="startScreen" class="screen start-screen">
+    <!-- PANTALLA INICIAL -->
+    <section id="startScreen" class="screen active">
+      <div class="start-box">
+        <div class="school-badge">PUMA</div>
+        <h1>100 ESTUDIANTES<br>DIJERON</h1>
+        <p>El juego de preguntas de nuestra escuela</p>
+        <button id="startBtn" class="main-btn">COMENZAR</button>
+      </div>
+    </section>
 
-        <div class="start-container">
 
-            <div class="main-logo">
-                <div class="logo-number">100</div>
-                <div class="logo-text">ESTUDIANTES</div>
-            </div>
+    <!-- SELECCIÓN DE PREGUNTAS -->
+    <section id="questionScreen" class="screen">
 
-            <h1>DIJERON</h1>
+      <div class="top-header">
+        <h2>SELECCIONA UNA PREGUNTA</h2>
+        <button id="backToStartBtn" class="small-btn">← INICIO</button>
+      </div>
 
-            <p class="tagline">
-                El juego de preguntas de nuestra escuela
-            </p>
+      <div class="filters">
 
-            <button id="startGameBtn" class="main-button">
-                COMENZAR JUEGO
+        <div class="category-buttons">
+          <button class="category-btn active" data-category="Todas">Todas</button>
+          <button class="category-btn" data-category="Escuela">Escuela</button>
+          <button class="category-btn" data-category="Vida Estudiantil">Vida Estudiantil</button>
+          <button class="category-btn" data-category="Diversión">Diversión</button>
+        </div>
+
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Buscar pregunta..."
+        >
+
+      </div>
+
+      <div id="questionList" class="question-list"></div>
+
+    </section>
+
+
+    <!-- JUEGO -->
+    <section id="gameScreen" class="screen">
+
+      <header class="game-header">
+
+        <div class="team-score team-a">
+          <span>ESTUDIANTES</span>
+          <strong id="scoreA">0</strong>
+        </div>
+
+        <div class="game-title">
+          <h1>100 ESTUDIANTES DIJERON</h1>
+          <div id="roundPoints">0 PUNTOS</div>
+        </div>
+
+        <div class="team-score team-b">
+          <span>MAESTROS</span>
+          <strong id="scoreB">0</strong>
+        </div>
+
+      </header>
+
+
+      <main class="game-main">
+
+        <div class="question-box">
+          <div class="question-label">PREGUNTA</div>
+          <h2 id="questionText">Pregunta</h2>
+        </div>
+
+
+        <div id="answers" class="answers-grid"></div>
+
+
+        <div class="game-controls">
+
+          <div class="strike-area">
+            <div id="strike1" class="strike">X</div>
+            <div id="strike2" class="strike">X</div>
+            <div id="strike3" class="strike">X</div>
+          </div>
+
+          <div class="controls-info">
+            <p><strong>1–5</strong> Revelar respuesta</p>
+            <p><strong>ESPACIO</strong> Siguiente respuesta</p>
+            <p><strong>X</strong> Strike</p>
+            <p><strong>R</strong> Reiniciar ronda</p>
+            <p><strong>Q</strong> Cambiar pregunta</p>
+          </div>
+
+        </div>
+
+      </main>
+
+
+      <!-- MODAL DE ROBO -->
+      <div id="stealModal" class="modal hidden">
+
+        <div class="modal-box">
+
+          <h2>¡TRES STRIKES!</h2>
+
+          <p>El otro equipo tiene una oportunidad para robar.</p>
+
+          <div class="steal-points">
+            <span>PUNTOS EN JUEGO</span>
+            <strong id="stealPoints">0</strong>
+          </div>
+
+          <div class="steal-buttons">
+
+            <button id="stealCorrectBtn" class="steal-correct">
+              ROBO CORRECTO
             </button>
 
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         QUESTION SELECTION SCREEN
-         ===================================================== -->
-
-    <section
-        id="questionSelectScreen"
-        class="screen question-select-screen"
-    >
-
-        <div class="selection-container">
-
-            <div class="selection-header">
-
-                <div>
-                    <div class="selection-logo">
-                        100
-                    </div>
-                </div>
-
-                <div class="selection-title">
-
-                    <h1>
-                        ELIGE UNA PREGUNTA
-                    </h1>
-
-                    <p>
-                        Selecciona la pregunta para comenzar la ronda
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <!-- CATEGORIES -->
-
-            <div class="question-filters">
-
-                <button
-                    class="category-btn active"
-                    data-category="Todas"
-                >
-                    TODAS
-                </button>
-
-                <button
-                    class="category-btn"
-                    data-category="Escuela"
-                >
-                    ESCUELA
-                </button>
-
-                <button
-                    class="category-btn"
-                    data-category="Vida Estudiantil"
-                >
-                    VIDA ESTUDIANTIL
-                </button>
-
-                <button
-                    class="category-btn"
-                    data-category="Diversión"
-                >
-                    DIVERSIÓN
-                </button>
-
-            </div>
-
-
-            <!-- SEARCH -->
-
-            <div class="search-box">
-
-                <span class="search-icon">
-                    🔎
-                </span>
-
-                <input
-                    id="questionSearch"
-                    type="text"
-                    placeholder="Buscar pregunta..."
-                    autocomplete="off"
-                >
-
-            </div>
-
-
-            <!-- QUESTION LIST -->
-
-            <div
-                id="questionList"
-                class="question-list"
-            >
-            </div>
-
-
-            <button
-                id="backToStartBtn"
-                class="back-btn"
-            >
-                ← VOLVER
+            <button id="stealFailBtn" class="steal-fail">
+              ROBO FALLIDO
             </button>
 
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         GAME SCREEN
-         ===================================================== -->
-
-    <section
-        id="gameScreen"
-        class="screen game-screen"
-    >
-
-        <!-- HEADER -->
-
-        <header class="game-header">
-
-            <div class="game-brand">
-
-                <div class="small-logo">
-                    100
-                </div>
-
-                <div>
-
-                    <div class="brand-top">
-                        100 ESTUDIANTES
-                    </div>
-
-                    <div class="brand-bottom">
-                        DIJERON
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div
-                id="roundNumber"
-                class="round-number"
-            >
-                PREGUNTA 1
-            </div>
-
-        </header>
-
-
-        <!-- QUESTION -->
-
-        <main class="game-content">
-
-            <div class="question-card">
-
-                <div class="question-label">
-                    PREGUNTA
-                </div>
-
-                <div
-                    id="questionText"
-                    class="question-text"
-                >
-                    Selecciona una pregunta
-                </div>
-
-                <div
-                    id="questionCounter"
-                    class="question-counter"
-                >
-                    5 respuestas
-                </div>
-
-            </div>
-
-
-            <!-- ANSWERS -->
-
-            <div
-                id="answerBoard"
-                class="answer-board"
-            >
-            </div>
-
-
-            <!-- STRIKES -->
-
-            <div class="strikes-area">
-
-                <div class="strikes-label">
-                    STRIKES
-                </div>
-
-                <div class="strikes">
-
-                    <div
-                        id="strike1"
-                        class="strike"
-                    >
-                    </div>
-
-                    <div
-                        id="strike2"
-                        class="strike"
-                    >
-                    </div>
-
-                    <div
-                        id="strike3"
-                        class="strike"
-                    >
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- ROUND POINTS -->
-
-            <div class="round-points-box">
-
-                <span>
-                    PUNTOS DE LA RONDA
-                </span>
-
-                <strong id="roundPoints">
-                    0
-                </strong>
-
-            </div>
-
-
-            <!-- SCOREBOARD -->
-
-            <div class="scoreboard">
-
-                <div
-                    class="team-card team-1"
-                    id="team1Card"
-                >
-
-                    <div class="team-name">
-                        EQUIPO 1
-                    </div>
-
-                    <div
-                        id="score1"
-                        class="team-score"
-                    >
-                        0
-                    </div>
-
-                </div>
-
-
-                <div class="vs">
-                    VS
-                </div>
-
-
-                <div
-                    class="team-card team-2"
-                    id="team2Card"
-                >
-
-                    <div class="team-name">
-                        EQUIPO 2
-                    </div>
-
-                    <div
-                        id="score2"
-                        class="team-score"
-                    >
-                        0
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- CONTROLS -->
-
-            <div class="controls">
-
-                <button
-                    id="revealBtn"
-                    class="control-btn reveal-btn"
-                >
-                    REVELAR
-                </button>
-
-                <button
-                    id="strikeBtn"
-                    class="control-btn strike-btn"
-                >
-                    X STRIKE
-                </button>
-
-                <button
-                    id="resetRoundBtn"
-                    class="control-btn reset-btn"
-                >
-                    REINICIAR
-                </button>
-
-                <button
-                    id="selectQuestionBtn"
-                    class="control-btn question-btn"
-                >
-                    CAMBIAR PREGUNTA
-                </button>
-
-            </div>
-
-
-            <!-- KEYBOARD HELP -->
-
-            <div class="keyboard-help">
-
-                <div>
-                    <strong>1–5</strong>
-                    Revelar respuesta
-                </div>
-
-                <div>
-                    <strong>ESPACIO</strong>
-                    Siguiente respuesta
-                </div>
-
-                <div>
-                    <strong>X</strong>
-                    Strike
-                </div>
-
-                <div>
-                    <strong>R</strong>
-                    Reiniciar
-                </div>
-
-                <div>
-                    <strong>Q</strong>
-                    Cambiar pregunta
-                </div>
-
-            </div>
-
-        </main>
-
-
-        <!-- FOOTER -->
-
-        <footer class="game-footer">
-            100 ESTUDIANTES DIJERON
-        </footer>
-
-    </section>
-
-
-    <!-- =====================================================
-         ROUND MODAL
-         ===================================================== -->
-
-    <div
-        id="roundModal"
-        class="modal"
-    >
-
-        <div class="modal-content">
-
-            <div class="modal-title">
-                RONDA TERMINADA
-            </div>
-
-            <div class="modal-points-label">
-                PUNTOS DE LA RONDA
-            </div>
-
-            <div
-                id="modalPoints"
-                class="modal-points"
-            >
-                0
-            </div>
-
-            <div class="modal-buttons">
-
-                <button
-                    id="modalSelectBtn"
-                    class="main-button"
-                >
-                    ELEGIR OTRA PREGUNTA
-                </button>
-
-            </div>
+          </div>
 
         </div>
 
-    </div>
+      </div>
 
 
-    <script src="script.js"></script>
+      <!-- MODAL FINAL DE RONDA -->
+      <div id="roundModal" class="modal hidden">
+
+        <div class="modal-box">
+
+          <h2 id="roundWinner">¡GANADOR!</h2>
+
+          <div class="winner-points">
+            <span>PUNTOS GANADOS</span>
+            <strong id="winnerPoints">0</strong>
+          </div>
+
+          <button id="nextQuestionBtn" class="main-btn">
+            SIGUIENTE PREGUNTA
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
 
 </body>
-
 </html>
