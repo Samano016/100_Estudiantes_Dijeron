@@ -1702,3 +1702,177 @@ footer {
     }
 
 }
+
+/* =========================================================
+   PANEL DE ROBO
+   ========================================================= */
+
+.steal-panel {
+    width: min(900px, 92%);
+    margin: 20px auto;
+    padding: 25px;
+    text-align: center;
+    background: var(--panel, #ffffff);
+    border: 3px solid var(--burgundy, #800020);
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    animation: stealAppear 0.35s ease;
+}
+
+.steal-title {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--burgundy, #800020);
+    margin-bottom: 8px;
+}
+
+.steal-message {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--ink, #23313d);
+    margin-bottom: 8px;
+}
+
+.steal-subtitle {
+    font-size: 1rem;
+    color: var(--muted, #697680);
+    margin-bottom: 20px;
+}
+
+.steal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.steal-buttons button {
+    border: none;
+    border-radius: 12px;
+    padding: 15px 25px;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.steal-buttons button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.18);
+}
+
+.steal-correct-btn {
+    background: var(--burgundy, #800020);
+    color: white;
+}
+
+.steal-wrong-btn {
+    background: var(--silver, #a7a9ac);
+    color: #222;
+}
+
+.steal-success {
+    border-color: #276749;
+}
+
+.steal-success .steal-title {
+    color: #276749;
+}
+
+.steal-failed {
+    border-color: #9b2c2c;
+}
+
+.steal-failed .steal-title {
+    color: #9b2c2c;
+}
+
+
+/* =========================================================
+   EQUIPO ACTIVO
+   ========================================================= */
+
+.active-team {
+    transform: scale(1.03);
+    box-shadow: 0 0 0 4px var(--burgundy, #800020);
+}
+
+
+/* =========================================================
+   RESPUESTAS
+   ========================================================= */
+
+.answer-card {
+    cursor: pointer;
+}
+
+.answer-card:hover {
+    transform: translateY(-2px);
+}
+
+.answer-card.revealed {
+    animation: answerReveal 0.4s ease;
+}
+
+
+/* =========================================================
+   ANIMACIONES
+   ========================================================= */
+
+@keyframes stealAppear {
+
+    from {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+}
+
+@keyframes answerReveal {
+
+    0% {
+        transform: rotateX(90deg);
+        opacity: 0;
+    }
+
+    100% {
+        transform: rotateX(0);
+        opacity: 1;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .steal-panel {
+        padding: 20px 15px;
+    }
+
+    .steal-title {
+        font-size: 1.6rem;
+    }
+
+    .steal-message {
+        font-size: 1.1rem;
+    }
+
+    .steal-buttons {
+        flex-direction: column;
+    }
+
+    .steal-buttons button {
+        width: 100%;
+    }
+
+}
