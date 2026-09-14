@@ -1,31 +1,256 @@
-/* ==========================================
+/* =========================================================
    100 ESTUDIANTES DIJERON
-   GAME ENGINE
-========================================== */
+   Juego estilo concurso
+   ========================================================= */
 
 
-/* ==========================================
-   VARIABLES
-========================================== */
+/* =========================================================
+   BANCO DE PREGUNTAS
+   ========================================================= */
 
-let questions = [];
+const questions = [
+
+    {
+        question: "Menciona algo que un estudiante hace antes de un examen.",
+        answers: [
+            { text: "Estudiar", points: 35 },
+            { text: "Dormir", points: 25 },
+            { text: "Repasar", points: 18 },
+            { text: "Usar el celular", points: 12 },
+            { text: "Preguntar a un amigo", points: 10 }
+        ]
+    },
+
+    {
+        question: "Menciona algo que un estudiante lleva en su mochila.",
+        answers: [
+            { text: "Cuadernos", points: 30 },
+            { text: "Lápices", points: 25 },
+            { text: "Computadora", points: 20 },
+            { text: "Cargador", points: 15 },
+            { text: "Comida", points: 10 }
+        ]
+    },
+
+    {
+        question: "Menciona algo que los estudiantes hacen durante el recreo.",
+        answers: [
+            { text: "Comer", points: 30 },
+            { text: "Hablar con amigos", points: 25 },
+            { text: "Usar el celular", points: 20 },
+            { text: "Caminar", points: 15 },
+            { text: "Jugar", points: 10 }
+        ]
+    },
+
+    {
+        question: "Menciona una materia que muchos estudiantes consideran difícil.",
+        answers: [
+            { text: "Matemáticas", points: 40 },
+            { text: "Inglés", points: 20 },
+            { text: "Ciencias", points: 18 },
+            { text: "Historia", points: 12 },
+            { text: "Química", points: 10 }
+        ]
+    },
+
+    {
+        question: "Menciona algo que un estudiante hace cuando llega tarde a clase.",
+        answers: [
+            { text: "Pedir permiso para entrar", points: 30 },
+            { text: "Disculparse", points: 25 },
+            { text: "Sentarse rápidamente", points: 20 },
+            { text: "Dar una excusa", points: 15 },
+            { text: "Preguntar qué hicieron", points: 10 }
+        ]
+    },
+
+    {
+        question: "Menciona algo que los estudiantes hacen en una computadora.",
+        answers: [
+            { text: "Hacer tareas", points: 30 },
+            { text: "Buscar información", points: 25 },
+            { text: "Ver videos", points: 20 },
+            { text: "Jugar", points: 15 },
+            { text: "Escuchar música", points: 10 }
+        ]
+    },
+
+    {
+        question: "Menciona algo que un estudiante compra en la escuela.",
+        answers: [
+            { text: "Comida", points: 35 },
+            { text: "Bebidas", points: 25 },
+            { text: "Snacks", points: 20 },
+            { text: "Útiles escolares", points: 12 },
+            { text: "Agua", points: 8 }
+        ]
+    },
+
+    {
+        question: "Menciona algo que un estudiante hace después de clases.",
+        answers: [
+            { text: "Ir a casa", points: 30 },
+            { text: "Trabajar", points: 25 },
+            { text: "Hacer tarea", points: 20 },
+            { text: "Practicar deportes", points: 15 },
+            { text: "Salir con amigos", points: 10 }
+        ]
+    },
+
+    {
+        question: "Menciona algo que necesitas para graduarte.",
+        answers: [
+            { text: "Créditos", points: 35 },
+            { text: "Pasar las clases", points: 25 },
+            { text: "Asistencia", points: 18 },
+            { text: "Exámenes", points: 12 },
+            { text: "Buenas calificaciones", points: 10 }
+        ]
+    },
+
+    {
+        question: "Menciona algo que un estudiante hace cuando no entiende una lección.",
+        answers: [
+            { text: "Pregunta al maestro", points: 35 },
+            { text: "Pregunta a un compañero", points: 25 },
+            { text: "Busca en Internet", points: 18 },
+            { text: "Practica", points: 12 },
+            { text: "Se queda callado", points: 10 }
+        ]
+    },
+
+    {
+        question: "Menciona algo que los estudiantes hacen cuando reciben buenas calificaciones.",
+        answers: [
+            { text: "Se sienten felices", points: 30 },
+            { text: "Se lo dicen a sus padres", points: 25 },
+            { text: "Celebran", points: 20 },
+            { text: "Presumen", points: 15 },
+            { text: "Guardan la calificación", points: 10 }
+        ]
+    },
+
+    {
+        question: "Menciona algo que puedes encontrar en un salón de clases.",
+        answers: [
+            { text: "Escritorios", points: 30 },
+            { text: "Pizarrón", points: 25 },
+            { text: "Computadoras", points: 20 },
+            { text: "Libros", points: 15 },
+            { text: "Calculadoras", points: 10 }
+        ]
+    },
+
+    {
+        question: "Menciona algo que un estudiante hace durante una presentación.",
+        answers: [
+            { text: "Hablar", points: 35 },
+            { text: "Leer", points: 25 },
+            { text: "Mostrar diapositivas", points: 18 },
+            { text: "Explicar", points: 12 },
+            { text: "Responder preguntas", points: 10 }
+        ]
+    },
+
+    {
+        question: "Menciona algo que un estudiante necesita para hacer una tarea.",
+        answers: [
+            { text: "Computadora", points: 30 },
+            { text: "Internet", points: 25 },
+            { text: "Cuaderno", points: 20 },
+            { text: "Lápiz", points: 15 },
+            { text: "Tiempo", points: 10 }
+        ]
+    },
+
+    {
+        question: "Menciona algo que los estudiantes esperan durante el año escolar.",
+        answers: [
+            { text: "Vacaciones", points: 35 },
+            { text: "Graduación", points: 25 },
+            { text: "Días libres", points: 18 },
+            { text: "Eventos escolares", points: 12 },
+            { text: "Fin de clases", points: 10 }
+        ]
+    },
+
+    {
+        question: "Menciona algo que un estudiante hace cuando tiene mucha tarea.",
+        answers: [
+            { text: "Organizarse", points: 30 },
+            { text: "Trabajar hasta tarde", points: 25 },
+            { text: "Pedir ayuda", points: 20 },
+            { text: "Procrastinar", points: 15 },
+            { text: "Quejarse", points: 10 }
+        ]
+    },
+
+    {
+        question: "Menciona algo que los estudiantes llevan a educación física.",
+        answers: [
+            { text: "Tenis", points: 30 },
+            { text: "Agua", points: 25 },
+            { text: "Ropa deportiva", points: 20 },
+            { text: "Toalla", points: 15 },
+            { text: "Desodorante", points: 10 }
+        ]
+    },
+
+    {
+        question: "Menciona algo que un estudiante hace durante el almuerzo.",
+        answers: [
+            { text: "Comer", points: 35 },
+            { text: "Hablar", points: 25 },
+            { text: "Usar el celular", points: 18 },
+            { text: "Escuchar música", points: 12 },
+            { text: "Caminar", points: 10 }
+        ]
+    },
+
+    {
+        question: "Menciona una razón por la que un estudiante puede llegar tarde.",
+        answers: [
+            { text: "Tráfico", points: 30 },
+            { text: "Se quedó dormido", points: 25 },
+            { text: "Problemas con el transporte", points: 20 },
+            { text: "No encontró sus cosas", points: 15 },
+            { text: "Se entretuvo", points: 10 }
+        ]
+    },
+
+    {
+        question: "Menciona algo que un estudiante puede hacer durante las vacaciones.",
+        answers: [
+            { text: "Viajar", points: 30 },
+            { text: "Dormir", points: 25 },
+            { text: "Trabajar", points: 20 },
+            { text: "Jugar videojuegos", points: 15 },
+            { text: "Salir con amigos", points: 10 }
+        ]
+    }
+
+];
+
+
+/* =========================================================
+   VARIABLES DEL JUEGO
+   ========================================================= */
 
 let currentQuestion = 0;
-
 let currentAnswer = 0;
 
 let roundPoints = 0;
 
 let score1 = 0;
-
 let score2 = 0;
 
 let strikes = 0;
 
 
-/* ==========================================
-   ELEMENTOS
-========================================== */
+/* =========================================================
+   ELEMENTOS HTML
+   ========================================================= */
 
 const startScreen =
     document.getElementById("startScreen");
@@ -79,104 +304,46 @@ const modalNextBtn =
     document.getElementById("modalNextBtn");
 
 
-/* ==========================================
+/* =========================================================
    STRIKES
-========================================== */
+   ========================================================= */
 
 const strikeElements = [
 
     document.getElementById("strike1"),
-
     document.getElementById("strike2"),
-
     document.getElementById("strike3")
 
 ];
 
 
-/* ==========================================
-   LOAD JSON
-========================================== */
+/* =========================================================
+   INICIAR JUEGO
+   ========================================================= */
 
-async function loadQuestions() {
+startGameBtn.addEventListener("click", () => {
 
-    try {
+    startScreen.classList.add("hidden");
 
-        const response =
-            await fetch("data_questions.json");
+    gameScreen.classList.remove("hidden");
 
-        if (!response.ok) {
+    currentQuestion = 0;
 
-            throw new Error(
-                "No se pudo cargar questions.json"
-            );
+    score1 = 0;
+    score2 = 0;
 
-        }
+    updateScores();
 
-        const data =
-            await response.json();
+    loadRound();
 
-        questions =
-            data.questions;
+    playSound("start");
 
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-        alert(
-            "No se pudieron cargar las preguntas."
-        );
-
-    }
-
-}
+});
 
 
-/* ==========================================
-   START GAME
-========================================== */
-
-startGameBtn.addEventListener(
-    "click",
-    async () => {
-
-        if (questions.length === 0) {
-
-            await loadQuestions();
-
-        }
-
-        if (questions.length === 0) {
-
-            return;
-
-        }
-
-        startScreen.classList.add("hidden");
-
-        gameScreen.classList.remove("hidden");
-
-        currentQuestion = 0;
-
-        score1 = 0;
-
-        score2 = 0;
-
-        updateScores();
-
-        loadRound();
-
-        playSound("start");
-
-    }
-);
-
-
-/* ==========================================
-   LOAD ROUND
-========================================== */
+/* =========================================================
+   CARGAR RONDA
+   ========================================================= */
 
 function loadRound() {
 
@@ -201,6 +368,9 @@ function loadRound() {
     roundPointsDisplay.textContent =
         roundPoints;
 
+    revealBtn.textContent =
+        "REVELAR RESPUESTA";
+
     resetStrikes();
 
     createAnswerBoard(
@@ -210,201 +380,173 @@ function loadRound() {
 }
 
 
-/* ==========================================
-   CREATE ANSWER BOARD
-========================================== */
+/* =========================================================
+   CREAR TABLERO
+   ========================================================= */
 
 function createAnswerBoard(answers) {
 
     answerBoard.innerHTML = "";
 
-    answers.forEach(
-        (answer, index) => {
+    answers.forEach((answer, index) => {
 
-            const answerElement =
-                document.createElement("div");
+        const answerElement =
+            document.createElement("div");
 
-            answerElement.className =
-                "answer hidden-answer";
+        answerElement.className =
+            "answer hidden-answer";
 
-            answerElement.dataset.index =
-                index;
+        answerElement.innerHTML = `
 
-            answerElement.innerHTML = `
+            <div class="answer-number">
+                ${index + 1}
+            </div>
 
-                <div class="answer-number">
-                    ${index + 1}
-                </div>
+            <div class="answer-content">
 
-                <div class="answer-content">
+                <span class="answer-hidden-mark">
+                    ?
+                </span>
 
-                    <span class="answer-hidden-mark">
-                        ?
-                    </span>
+                <span class="answer-text">
+                    ${answer.text}
+                </span>
 
-                    <span class="answer-text">
-                        ${answer.text}
-                    </span>
+                <span class="answer-points">
+                    ${answer.points}
+                </span>
 
-                    <span class="answer-points">
-                        ${answer.points}
-                    </span>
+            </div>
 
-                </div>
+        `;
 
-            `;
+        answerBoard.appendChild(
+            answerElement
+        );
 
-            answerBoard.appendChild(
-                answerElement
-            );
-
-        }
-    );
+    });
 
 }
 
 
-/* ==========================================
-   REVEAL ANSWER
-========================================== */
+/* =========================================================
+   REVELAR RESPUESTA
+   ========================================================= */
 
-revealBtn.addEventListener(
-    "click",
-    () => {
+revealBtn.addEventListener("click", () => {
 
-        const answers =
-            questions[currentQuestion].answers;
+    const answers =
+        questions[currentQuestion].answers;
 
-        if (
-            currentAnswer >= answers.length
-        ) {
+    if (
+        currentAnswer >= answers.length
+    ) {
+
+        finishRound();
+
+        return;
+
+    }
+
+    const answerElement =
+        answerBoard.children[currentAnswer];
+
+    answerElement.classList.remove(
+        "hidden-answer"
+    );
+
+    answerElement.classList.add(
+        "revealed"
+    );
+
+    roundPoints +=
+        answers[currentAnswer].points;
+
+    roundPointsDisplay.textContent =
+        roundPoints;
+
+    currentAnswer++;
+
+    playSound("reveal");
+
+    if (
+        currentAnswer >= answers.length
+    ) {
+
+        revealBtn.textContent =
+            "RONDA TERMINADA";
+
+    }
+
+});
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+strikeBtn.addEventListener("click", () => {
+
+    if (strikes >= 3) {
+
+        return;
+
+    }
+
+    strikeElements[strikes]
+        .classList.add("active");
+
+    strikes++;
+
+    playSound("strike");
+
+    if (strikes === 3) {
+
+        setTimeout(() => {
 
             finishRound();
 
-            return;
-
-        }
-
-        const answerElement =
-            answerBoard.children[currentAnswer];
-
-        answerElement.classList.remove(
-            "hidden-answer"
-        );
-
-        answerElement.classList.add(
-            "revealed"
-        );
-
-        roundPoints +=
-            answers[currentAnswer].points;
-
-        roundPointsDisplay.textContent =
-            roundPoints;
-
-        currentAnswer++;
-
-        playSound("reveal");
-
-        if (
-            currentAnswer >= answers.length
-        ) {
-
-            revealBtn.textContent =
-                "RONDA TERMINADA";
-
-        }
+        }, 800);
 
     }
-);
+
+});
 
 
-/* ==========================================
-   STRIKE
-========================================== */
+/* =========================================================
+   REINICIAR RONDA
+   ========================================================= */
 
-strikeBtn.addEventListener(
-    "click",
-    () => {
+resetRoundBtn.addEventListener("click", () => {
 
-        if (strikes >= 3) {
+    loadRound();
 
-            return;
-
-        }
-
-        strikeElements[strikes]
-            .classList.add("active");
-
-        strikes++;
-
-        playSound("strike");
-
-        if (strikes === 3) {
-
-            setTimeout(
-                () => {
-
-                    finishRound();
-
-                },
-                800
-            );
-
-        }
-
-    }
-);
+});
 
 
-/* ==========================================
-   RESET ROUND
-========================================== */
+/* =========================================================
+   SIGUIENTE RONDA
+   ========================================================= */
 
-resetRoundBtn.addEventListener(
-    "click",
-    () => {
+nextRoundBtn.addEventListener("click", () => {
 
-        loadRound();
+    nextRound();
 
-        revealBtn.textContent =
-            "REVELAR RESPUESTA";
-
-    }
-);
+});
 
 
-/* ==========================================
-   NEXT ROUND
-========================================== */
+modalNextBtn.addEventListener("click", () => {
 
-nextRoundBtn.addEventListener(
-    "click",
-    () => {
+    roundModal.classList.add("hidden");
 
-        nextRound();
+    nextRound();
 
-    }
-);
+});
 
 
-modalNextBtn.addEventListener(
-    "click",
-    () => {
-
-        roundModal.classList.add(
-            "hidden"
-        );
-
-        nextRound();
-
-    }
-);
-
-
-/* ==========================================
-   FINISH ROUND
-========================================== */
+/* =========================================================
+   TERMINAR RONDA
+   ========================================================= */
 
 function finishRound() {
 
@@ -418,9 +560,9 @@ function finishRound() {
 }
 
 
-/* ==========================================
-   NEXT QUESTION
-========================================== */
+/* =========================================================
+   SIGUIENTE PREGUNTA
+   ========================================================= */
 
 function nextRound() {
 
@@ -436,26 +578,35 @@ function nextRound() {
 
     }
 
-    revealBtn.textContent =
-        "REVELAR RESPUESTA";
-
     loadRound();
 
 }
 
 
-/* ==========================================
-   FINAL SCORE
-========================================== */
+/* =========================================================
+   PANTALLA FINAL
+   ========================================================= */
 
 function showFinalScore() {
 
-    const winner =
-        score1 > score2
-            ? "¡GANA EL EQUIPO 1!"
-            : score2 > score1
-                ? "¡GANA EL EQUIPO 2!"
-                : "¡EMPATE!";
+    let winner;
+
+    if (score1 > score2) {
+
+        winner =
+            "¡GANA EL EQUIPO 1!";
+
+    } else if (score2 > score1) {
+
+        winner =
+            "¡GANA EL EQUIPO 2!";
+
+    } else {
+
+        winner =
+            "¡EMPATE!";
+
+    }
 
     questionText.textContent =
         winner;
@@ -471,7 +622,11 @@ function showFinalScore() {
                 font-weight: 900;
             "
         >
-            ${score1} — ${score2}
+
+            <div>
+                ${score1} — ${score2}
+            </div>
+
         </div>
 
     `;
@@ -484,11 +639,17 @@ function showFinalScore() {
 }
 
 
-/* ==========================================
-   ADD SCORE
-========================================== */
+/* =========================================================
+   AGREGAR PUNTOS
+   ========================================================= */
 
 function addScore(team) {
+
+    if (roundPoints <= 0) {
+
+        return;
+
+    }
 
     if (team === 1) {
 
@@ -509,9 +670,9 @@ function addScore(team) {
 }
 
 
-/* ==========================================
-   UPDATE SCORES
-========================================== */
+/* =========================================================
+   ACTUALIZAR MARCADORES
+   ========================================================= */
 
 function updateScores() {
 
@@ -524,31 +685,28 @@ function updateScores() {
 }
 
 
-/* ==========================================
-   RESET STRIKES
-========================================== */
+/* =========================================================
+   REINICIAR ERRORES
+   ========================================================= */
 
 function resetStrikes() {
 
     strikes = 0;
 
-    strikeElements.forEach(
-        strike => {
+    strikeElements.forEach(strike => {
 
-            strike.classList.remove(
-                "active"
-            );
+        strike.classList.remove(
+            "active"
+        );
 
-        }
-    );
+    });
 
 }
 
 
-/* ==========================================
-   SOUND SYSTEM
-   Uses Web Audio API
-========================================== */
+/* =========================================================
+   SISTEMA DE SONIDO
+   ========================================================= */
 
 let audioContext = null;
 
@@ -616,21 +774,28 @@ function beep(
 }
 
 
+/* =========================================================
+   DIFERENTES SONIDOS
+   ========================================================= */
+
 function playSound(type) {
 
     if (type === "start") {
 
         beep(330, 0.15);
+
         setTimeout(
             () => beep(440, 0.15),
             150
         );
+
         setTimeout(
             () => beep(660, 0.3),
             300
         );
 
     }
+
 
     if (type === "reveal") {
 
@@ -643,6 +808,7 @@ function playSound(type) {
 
     }
 
+
     if (type === "strike") {
 
         beep(
@@ -652,6 +818,7 @@ function playSound(type) {
         );
 
     }
+
 
     if (type === "score") {
 
@@ -663,6 +830,7 @@ function playSound(type) {
         );
 
     }
+
 
     if (type === "winner") {
 
@@ -688,20 +856,22 @@ function playSound(type) {
 }
 
 
-/* ==========================================
-   KEYBOARD CONTROLS
-========================================== */
+/* =========================================================
+   ATAJOS DE TECLADO
+   =========================================================
+
+   ESPACIO = Revelar
+   X       = Error
+   R       = Reiniciar
+   N       = Siguiente ronda
+   1       = Puntos Equipo 1
+   2       = Puntos Equipo 2
+
+   ========================================================= */
 
 document.addEventListener(
     "keydown",
     event => {
-
-        /*
-         Space = reveal
-        X = strike
-        R = reset
-        N = next round
-        */
 
         if (
             gameScreen.classList.contains(
@@ -713,6 +883,7 @@ document.addEventListener(
 
         }
 
+
         if (
             event.code === "Space"
         ) {
@@ -723,6 +894,7 @@ document.addEventListener(
 
         }
 
+
         if (
             event.key.toLowerCase() === "x"
         ) {
@@ -730,6 +902,7 @@ document.addEventListener(
             strikeBtn.click();
 
         }
+
 
         if (
             event.key.toLowerCase() === "r"
@@ -739,6 +912,7 @@ document.addEventListener(
 
         }
 
+
         if (
             event.key.toLowerCase() === "n"
         ) {
@@ -747,12 +921,23 @@ document.addEventListener(
 
         }
 
+
+        if (
+            event.key === "1"
+        ) {
+
+            addScore(1);
+
+        }
+
+
+        if (
+            event.key === "2"
+        ) {
+
+            addScore(2);
+
+        }
+
     }
 );
-
-
-/* ==========================================
-   INITIAL LOAD
-========================================== */
-
-loadQuestions();
