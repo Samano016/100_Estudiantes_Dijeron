@@ -1,0 +1,379 @@
+{
+  "questions": [
+    {
+      "question": "Menciona algo que un estudiante hace antes de un examen.",
+      "answers": [
+        {
+          "text": "Estudiar",
+          "points": 35
+        },
+        {
+          "text": "Dormir",
+          "points": 25
+        },
+        {
+          "text": "Repasar",
+          "points": 18
+        },
+        {
+          "text": "Usar el celular",
+          "points": 12
+        },
+        {
+          "text": "Preguntar a un amigo",
+          "points": 10
+        }
+      ]
+    },
+    {
+      "question": "Menciona algo que un estudiante lleva en su mochila.",
+      "answers": [
+        {
+          "text": "Cuadernos",
+          "points": 30
+        },
+        {
+          "text": "Lápices",
+          "points": 25
+        },
+        {
+          "text": "Computadora",
+          "points": 20
+        },
+        {
+          "text": "Cargador",
+          "points": 15
+        },
+        {
+          "text": "Comida",
+          "points": 10
+        }
+      ]
+    },
+    {
+      "question": "Menciona algo que los estudiantes hacen durante el recreo.",
+      "answers": [
+        {
+          "text": "Comer",
+          "points": 30
+        },
+        {
+          "text": "Hablar con amigos",
+          "points": 25
+        },
+        {
+          "text": "Usar el celular",
+          "points": 20
+        },
+        {
+          "text": "Caminar",
+          "points": 15
+        },
+        {
+          "text": "Jugar",
+          "points": 10
+        }
+      ]
+    },
+    {
+      "question": "Menciona una materia que muchos estudiantes consideran difícil.",
+      "answers": [
+        {
+          "text": "Matemáticas",
+          "points": 40
+        },
+        {
+          "text": "Inglés",
+          "points": 20
+        },
+        {
+          "text": "Ciencias",
+          "points": 18
+        },
+        {
+          "text": "Historia",
+          "points": 12
+        },
+        {
+          "text": "Química",
+          "points": 10
+        }
+      ]
+    },
+    {
+      "question": "Menciona algo que un estudiante hace cuando llega tarde a clase.",
+      "answers": [
+        {
+          "text": "Pedir permiso para entrar",
+          "points": 30
+        },
+        {
+          "text": "Disculparse",
+          "points": 25
+        },
+        {
+          "text": "Sentarse rápidamente",
+          "points": 20
+        },
+        {
+          "text": "Dar una excusa",
+          "points": 15
+        },
+        {
+          "text": "Preguntar qué hicieron",
+          "points": 10
+        }
+      ]
+    },
+    {
+      "question": "Menciona algo que los estudiantes hacen en una computadora.",
+      "answers": [
+        {
+          "text": "Hacer tareas",
+          "points": 30
+        },
+        {
+          "text": "Buscar información",
+          "points": 25
+        },
+        {
+          "text": "Ver videos",
+          "points": 20
+        },
+        {
+          "text": "Jugar",
+          "points": 15
+        },
+        {
+          "text": "Escuchar música",
+          "points": 10
+        }
+      ]
+    },
+    {
+      "question": "Menciona algo que un estudiante compra en la escuela.",
+      "answers": [
+        {
+          "text": "Comida",
+          "points": 35
+        },
+        {
+          "text": "Bebidas",
+          "points": 25
+        },
+        {
+          "text": "Snacks",
+          "points": 20
+        },
+        {
+          "text": "Útiles escolares",
+          "points": 12
+        },
+        {
+          "text": "Agua",
+          "points": 8
+        }
+      ]
+    },
+    {
+      "question": "Menciona algo que los estudiantes hacen después de clases.",
+      "answers": [
+        {
+          "text": "Ir a casa",
+          "points": 30
+        },
+        {
+          "text": "Trabajar",
+          "points": 25
+        },
+        {
+          "text": "Hacer tarea",
+          "points": 20
+        },
+        {
+          "text": "Practicar deportes",
+          "points": 15
+        },
+        {
+          "text": "Salir con amigos",
+          "points": 10
+        }
+      ]
+    },
+    {
+      "question": "Menciona algo que necesitas para graduarte.",
+      "answers": [
+        {
+          "text": "Créditos",
+          "points": 35
+        },
+        {
+          "text": "Pasar las clases",
+          "points": 25
+        },
+        {
+          "text": "Asistencia",
+          "points": 18
+        },
+        {
+          "text": "Exámenes",
+          "points": 12
+        },
+        {
+          "text": "Buenas calificaciones",
+          "points": 10
+        }
+      ]
+    },
+    {
+      "question": "Menciona algo que un estudiante hace cuando no entiende una lección.",
+      "answers": [
+        {
+          "text": "Pregunta al maestro",
+          "points": 35
+        },
+        {
+          "text": "Pregunta a un compañero",
+          "points": 25
+        },
+        {
+          "text": "Busca en Internet",
+          "points": 18
+        },
+        {
+          "text": "Practica",
+          "points": 12
+        },
+        {
+          "text": "Se queda callado",
+          "points": 10
+        }
+      ]
+    },
+    {
+      "question": "Menciona algo que los estudiantes hacen cuando reciben buenas calificaciones.",
+      "answers": [
+        {
+          "text": "Se sienten felices",
+          "points": 30
+        },
+        {
+          "text": "Se lo dicen a sus padres",
+          "points": 25
+        },
+        {
+          "text": "Celebran",
+          "points": 20
+        },
+        {
+          "text": "Presumen",
+          "points": 15
+        },
+        {
+          "text": "Guardan la calificación",
+          "points": 10
+        }
+      ]
+    },
+    {
+      "question": "Menciona algo que puedes encontrar en un salón de clases.",
+      "answers": [
+        {
+          "text": "Escritorios",
+          "points": 30
+        },
+        {
+          "text": "Pizarrón",
+          "points": 25
+        },
+        {
+          "text": "Computadoras",
+          "points": 20
+        },
+        {
+          "text": "Libros",
+          "points": 15
+        },
+        {
+          "text": "Calculadoras",
+          "points": 10
+        }
+      ]
+    },
+    {
+      "question": "Menciona algo que un estudiante hace durante una presentación.",
+      "answers": [
+        {
+          "text": "Hablar",
+          "points": 35
+        },
+        {
+          "text": "Leer",
+          "points": 25
+        },
+        {
+          "text": "Mostrar diapositivas",
+          "points": 18
+        },
+        {
+          "text": "Explicar",
+          "points": 12
+        },
+        {
+          "text": "Poner nervioso",
+          "points": 10
+        }
+      ]
+    },
+    {
+      "question": "Menciona algo que un estudiante necesita para hacer una tarea.",
+      "answers": [
+        {
+          "text": "Computadora",
+          "points": 30
+        },
+        {
+          "text": "Internet",
+          "points": 25
+        },
+        {
+          "text": "Cuaderno",
+          "points": 20
+        },
+        {
+          "text": "Lápiz",
+          "points": 15
+        },
+        {
+          "text": "Tiempo",
+          "points": 10
+        }
+      ]
+    },
+    {
+      "question": "Menciona algo que los estudiantes esperan durante el año escolar.",
+      "answers": [
+        {
+          "text": "Vacaciones",
+          "points": 35
+        },
+        {
+          "text": "Graduación",
+          "points": 25
+        },
+        {
+          "text": "Días libres",
+          "points": 18
+        },
+        {
+          "text": "Eventos escolares",
+          "points": 12
+        },
+        {
+          "text": "Fin de clases",
+          "points": 10
+        }
+      ]
+    }
+  ]
+}

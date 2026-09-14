@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100 Estudiantes Dijeron</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         PANTALLA DE INICIO
+    ========================== -->
+    <section id="startScreen" class="screen start-screen">
+
+        <div class="intro-content">
+
+            <div class="logo-circle">
+                <span>100</span>
+            </div>
+
+            <h1>100 ESTUDIANTES</h1>
+            <h2>DIJERON</h2>
+
+            <p class="tagline">
+                El juego donde el salón tiene la respuesta
+            </p>
+
+            <button id="startGameBtn" class="main-btn">
+                COMENZAR JUEGO
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         JUEGO PRINCIPAL
+    ========================== -->
+    <main id="gameScreen" class="game-screen hidden">
+
+        <!-- HEADER -->
+        <header class="game-header">
+
+            <div class="brand">
+                <div class="mini-logo">100</div>
+
+                <div>
+                    <h1>ESTUDIANTES</h1>
+                    <span>DIJERON</span>
+                </div>
+            </div>
+
+            <div class="round-display">
+                RONDA
+                <strong id="roundNumber">1</strong>
+            </div>
+
+        </header>
+
+
+        <!-- PREGUNTA -->
+        <section class="question-area">
+
+            <div class="question-card">
+
+                <span class="question-label">
+                    PREGUNTA
+                </span>
+
+                <h2 id="questionText">
+                    Cargando pregunta...
+                </h2>
+
+            </div>
+
+        </section>
+
+
+        <!-- TABLERO -->
+        <section class="board-container">
+
+            <div id="answerBoard" class="answer-board">
+                <!-- Las respuestas se generan con JS -->
+            </div>
+
+        </section>
+
+
+        <!-- ERRORES -->
+        <section class="strikes-container">
+
+            <div id="strike1" class="strike">X</div>
+            <div id="strike2" class="strike">X</div>
+            <div id="strike3" class="strike">X</div>
+
+        </section>
+
+
+        <!-- MARCADORES -->
+        <section class="scoreboard">
+
+            <div class="team-card team-one">
+
+                <div class="team-title">
+                    EQUIPO 1
+                </div>
+
+                <div id="score1" class="score">
+                    0
+                </div>
+
+                <button
+                    class="score-btn"
+                    onclick="addScore(1)">
+                    + PUNTOS
+                </button>
+
+            </div>
+
+
+            <div class="total-points">
+
+                <span>PUNTOS DE LA RONDA</span>
+
+                <strong id="roundPoints">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="team-card team-two">
+
+                <div class="team-title">
+                    EQUIPO 2
+                </div>
+
+                <div id="score2" class="score">
+                    0
+                </div>
+
+                <button
+                    class="score-btn"
+                    onclick="addScore(2)">
+                    + PUNTOS
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONTROLES -->
+        <section class="controls">
+
+            <button id="revealBtn" class="control-btn reveal">
+                REVELAR RESPUESTA
+            </button>
+
+            <button id="strikeBtn" class="control-btn strike-btn">
+                ERROR
+            </button>
+
+            <button id="resetRoundBtn" class="control-btn">
+                REINICIAR RONDA
+            </button>
+
+            <button id="nextRoundBtn" class="control-btn next">
+                SIGUIENTE RONDA
+            </button>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer>
+            <span>100 ESTUDIANTES DIJERON</span>
+            <span>•</span>
+            <span id="questionCounter">Pregunta 1</span>
+        </footer>
+
+    </main>
+
+
+    <!-- MODAL DE RONDA TERMINADA -->
+    <div id="roundModal" class="modal hidden">
+
+        <div class="modal-content">
+
+            <div class="modal-number">
+                RONDA
+            </div>
+
+            <h2>¡RONDA TERMINADA!</h2>
+
+            <p>
+                Puntos obtenidos:
+            </p>
+
+            <strong id="modalPoints">
+                0
+            </strong>
+
+            <button id="modalNextBtn" class="main-btn">
+                SIGUIENTE RONDA
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
