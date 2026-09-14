@@ -1,352 +1,146 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>100 Estudiantes Dijeron</title>
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
+    <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
+    <!-- =====================================================
+         START SCREEN
+         ===================================================== -->
 
-<!-- =====================================================
-     PANTALLA DE INICIO
-===================================================== -->
+    <section id="startScreen" class="screen start-screen">
 
-<section
-    id="startScreen"
-    class="screen start-screen"
->
+        <div class="start-container">
 
-    <div class="intro-content">
+            <div class="main-logo">
+                <div class="logo-number">100</div>
+                <div class="logo-text">ESTUDIANTES</div>
+            </div>
 
-        <div class="logo-circle">
-            <span>100</span>
+            <h1>DIJERON</h1>
+
+            <p class="tagline">
+                El juego de preguntas de nuestra escuela
+            </p>
+
+            <button id="startGameBtn" class="main-button">
+                COMENZAR JUEGO
+            </button>
+
         </div>
 
-        <h1>
-            100 ESTUDIANTES
-        </h1>
-
-        <h2>
-            DIJERON
-        </h2>
-
-        <p class="tagline">
-            El juego donde el salón tiene la respuesta
-        </p>
-
-        <button
-            id="startGameBtn"
-            class="main-btn"
-        >
-            COMENZAR JUEGO
-        </button>
-
-    </div>
-
-</section>
+    </section>
 
 
+    <!-- =====================================================
+         QUESTION SELECTION SCREEN
+         ===================================================== -->
 
-<!-- =====================================================
-     SELECTOR DE PREGUNTAS
-===================================================== -->
+    <section
+        id="questionSelectScreen"
+        class="screen question-select-screen"
+    >
 
-<section
-    id="questionSelectScreen"
-    class="question-select-screen hidden"
->
+        <div class="selection-container">
 
-    <div class="selection-container">
+            <div class="selection-header">
 
-        <div class="selection-header">
+                <div>
+                    <div class="selection-logo">
+                        100
+                    </div>
+                </div>
 
-            <div>
+                <div class="selection-title">
 
-                <div class="selection-logo">
-                    100
+                    <h1>
+                        ELIGE UNA PREGUNTA
+                    </h1>
+
+                    <p>
+                        Selecciona la pregunta para comenzar la ronda
+                    </p>
+
                 </div>
 
             </div>
 
-            <div>
 
-                <h1>
-                    SELECCIONA UNA PREGUNTA
-                </h1>
+            <!-- CATEGORIES -->
 
-                <p>
-                    Elige la pregunta que quieres jugar
-                </p>
+            <div class="question-filters">
+
+                <button
+                    class="category-btn active"
+                    data-category="Todas"
+                >
+                    TODAS
+                </button>
+
+                <button
+                    class="category-btn"
+                    data-category="Escuela"
+                >
+                    ESCUELA
+                </button>
+
+                <button
+                    class="category-btn"
+                    data-category="Vida Estudiantil"
+                >
+                    VIDA ESTUDIANTIL
+                </button>
+
+                <button
+                    class="category-btn"
+                    data-category="Diversión"
+                >
+                    DIVERSIÓN
+                </button>
 
             </div>
 
-        </div>
 
+            <!-- SEARCH -->
 
-        <!-- FILTROS -->
+            <div class="search-box">
 
-        <div class="question-filters">
-
-            <button
-                class="category-btn active"
-                data-category="Todas"
-            >
-                TODAS
-            </button>
-
-            <button
-                class="category-btn"
-                data-category="Escuela"
-            >
-                ESCUELA
-            </button>
-
-            <button
-                class="category-btn"
-                data-category="Vida Estudiantil"
-            >
-                VIDA ESTUDIANTIL
-            </button>
-
-            <button
-                class="category-btn"
-                data-category="Diversión"
-            >
-                DIVERSIÓN
-            </button>
-
-        </div>
-
-
-        <!-- BUSCADOR -->
-
-        <div class="search-box">
-
-            <input
-                type="text"
-                id="questionSearch"
-                placeholder="Buscar una pregunta..."
-            >
-
-        </div>
-
-
-        <!-- LISTA -->
-
-        <div
-            id="questionList"
-            class="question-list"
-        >
-
-        </div>
-
-
-        <!-- BOTÓN REGRESAR -->
-
-        <button
-            id="backToStartBtn"
-            class="back-btn"
-        >
-            ← VOLVER
-        </button>
-
-    </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     JUEGO
-===================================================== -->
-
-<main
-    id="gameScreen"
-    class="game-screen hidden"
->
-
-
-    <!-- HEADER -->
-
-    <header class="game-header">
-
-        <div class="brand">
-
-            <div class="mini-logo">
-                100
-            </div>
-
-            <div>
-
-                <h1>
-                    ESTUDIANTES
-                </h1>
-
-                <span>
-                    DIJERON
+                <span class="search-icon">
+                    🔎
                 </span>
 
+                <input
+                    id="questionSearch"
+                    type="text"
+                    placeholder="Buscar pregunta..."
+                    autocomplete="off"
+                >
+
             </div>
 
-        </div>
 
-
-        <div class="round-display">
-
-            RONDA
-
-            <strong id="roundNumber">
-                1
-            </strong>
-
-        </div>
-
-    </header>
-
-
-
-    <!-- PREGUNTA -->
-
-    <section class="question-area">
-
-        <div class="question-card">
-
-            <span class="question-label">
-                PREGUNTA
-            </span>
-
-            <h2 id="questionText">
-                Cargando pregunta...
-            </h2>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- TABLERO -->
-
-    <section class="board-container">
-
-        <div
-            id="answerBoard"
-            class="answer-board"
-        >
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ERRORES -->
-
-    <section class="strikes-container">
-
-        <div
-            id="strike1"
-            class="strike"
-        >
-            X
-        </div>
-
-        <div
-            id="strike2"
-            class="strike"
-        >
-            X
-        </div>
-
-        <div
-            id="strike3"
-            class="strike"
-        >
-            X
-        </div>
-
-    </section>
-
-
-
-    <!-- MARCADORES -->
-
-    <section class="scoreboard">
-
-
-        <div class="team-card team-one">
-
-            <div class="team-title">
-                EQUIPO 1
-            </div>
+            <!-- QUESTION LIST -->
 
             <div
-                id="score1"
-                class="score"
+                id="questionList"
+                class="question-list"
             >
-                0
             </div>
+
 
             <button
-                class="score-btn"
-                onclick="addScore(1)"
+                id="backToStartBtn"
+                class="back-btn"
             >
-                + PUNTOS
-            </button>
-
-        </div>
-
-
-
-        <div class="total-points">
-
-            <span>
-                PUNTOS DE LA RONDA
-            </span>
-
-            <strong id="roundPoints">
-                0
-            </strong>
-
-        </div>
-
-
-
-        <div class="team-card team-two">
-
-            <div class="team-title">
-                EQUIPO 2
-            </div>
-
-            <div
-                id="score2"
-                class="score"
-            >
-                0
-            </div>
-
-            <button
-                class="score-btn"
-                onclick="addScore(2)"
-            >
-                + PUNTOS
+                ← VOLVER
             </button>
 
         </div>
@@ -354,113 +148,305 @@
     </section>
 
 
+    <!-- =====================================================
+         GAME SCREEN
+         ===================================================== -->
 
-    <!-- CONTROLES -->
+    <section
+        id="gameScreen"
+        class="screen game-screen"
+    >
 
-    <section class="controls">
+        <!-- HEADER -->
 
-        <button
-            id="revealBtn"
-            class="control-btn reveal"
-        >
-            REVELAR RESPUESTA
-        </button>
+        <header class="game-header">
 
-        <button
-            id="strikeBtn"
-            class="control-btn strike-btn"
-        >
-            ERROR
-        </button>
+            <div class="game-brand">
 
-        <button
-            id="resetRoundBtn"
-            class="control-btn"
-        >
-            REINICIAR
-        </button>
+                <div class="small-logo">
+                    100
+                </div>
 
-        <button
-            id="selectQuestionBtn"
-            class="control-btn"
-        >
-            CAMBIAR PREGUNTA
-        </button>
+                <div>
 
-    </section>
+                    <div class="brand-top">
+                        100 ESTUDIANTES
+                    </div>
+
+                    <div class="brand-bottom">
+                        DIJERON
+                    </div>
+
+                </div>
+
+            </div>
 
 
+            <div
+                id="roundNumber"
+                class="round-number"
+            >
+                PREGUNTA 1
+            </div>
 
-    <!-- FOOTER -->
+        </header>
 
-    <footer>
 
-        <span>
+        <!-- QUESTION -->
+
+        <main class="game-content">
+
+            <div class="question-card">
+
+                <div class="question-label">
+                    PREGUNTA
+                </div>
+
+                <div
+                    id="questionText"
+                    class="question-text"
+                >
+                    Selecciona una pregunta
+                </div>
+
+                <div
+                    id="questionCounter"
+                    class="question-counter"
+                >
+                    5 respuestas
+                </div>
+
+            </div>
+
+
+            <!-- ANSWERS -->
+
+            <div
+                id="answerBoard"
+                class="answer-board"
+            >
+            </div>
+
+
+            <!-- STRIKES -->
+
+            <div class="strikes-area">
+
+                <div class="strikes-label">
+                    STRIKES
+                </div>
+
+                <div class="strikes">
+
+                    <div
+                        id="strike1"
+                        class="strike"
+                    >
+                    </div>
+
+                    <div
+                        id="strike2"
+                        class="strike"
+                    >
+                    </div>
+
+                    <div
+                        id="strike3"
+                        class="strike"
+                    >
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ROUND POINTS -->
+
+            <div class="round-points-box">
+
+                <span>
+                    PUNTOS DE LA RONDA
+                </span>
+
+                <strong id="roundPoints">
+                    0
+                </strong>
+
+            </div>
+
+
+            <!-- SCOREBOARD -->
+
+            <div class="scoreboard">
+
+                <div
+                    class="team-card team-1"
+                    id="team1Card"
+                >
+
+                    <div class="team-name">
+                        EQUIPO 1
+                    </div>
+
+                    <div
+                        id="score1"
+                        class="team-score"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="vs">
+                    VS
+                </div>
+
+
+                <div
+                    class="team-card team-2"
+                    id="team2Card"
+                >
+
+                    <div class="team-name">
+                        EQUIPO 2
+                    </div>
+
+                    <div
+                        id="score2"
+                        class="team-score"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONTROLS -->
+
+            <div class="controls">
+
+                <button
+                    id="revealBtn"
+                    class="control-btn reveal-btn"
+                >
+                    REVELAR
+                </button>
+
+                <button
+                    id="strikeBtn"
+                    class="control-btn strike-btn"
+                >
+                    X STRIKE
+                </button>
+
+                <button
+                    id="resetRoundBtn"
+                    class="control-btn reset-btn"
+                >
+                    REINICIAR
+                </button>
+
+                <button
+                    id="selectQuestionBtn"
+                    class="control-btn question-btn"
+                >
+                    CAMBIAR PREGUNTA
+                </button>
+
+            </div>
+
+
+            <!-- KEYBOARD HELP -->
+
+            <div class="keyboard-help">
+
+                <div>
+                    <strong>1–5</strong>
+                    Revelar respuesta
+                </div>
+
+                <div>
+                    <strong>ESPACIO</strong>
+                    Siguiente respuesta
+                </div>
+
+                <div>
+                    <strong>X</strong>
+                    Strike
+                </div>
+
+                <div>
+                    <strong>R</strong>
+                    Reiniciar
+                </div>
+
+                <div>
+                    <strong>Q</strong>
+                    Cambiar pregunta
+                </div>
+
+            </div>
+
+        </main>
+
+
+        <!-- FOOTER -->
+
+        <footer class="game-footer">
             100 ESTUDIANTES DIJERON
-        </span>
+        </footer>
 
-        <span>
-            •
-        </span>
-
-        <span id="questionCounter">
-            Pregunta
-        </span>
-
-    </footer>
+    </section>
 
 
-</main>
+    <!-- =====================================================
+         ROUND MODAL
+         ===================================================== -->
 
+    <div
+        id="roundModal"
+        class="modal"
+    >
 
+        <div class="modal-content">
 
-<!-- =====================================================
-     MODAL
-===================================================== -->
+            <div class="modal-title">
+                RONDA TERMINADA
+            </div>
 
-<div
-    id="roundModal"
-    class="modal hidden"
->
+            <div class="modal-points-label">
+                PUNTOS DE LA RONDA
+            </div>
 
-    <div class="modal-content">
-
-        <div class="modal-number">
-            RONDA TERMINADA
-        </div>
-
-        <h2>
-            ¡BUEN TRABAJO!
-        </h2>
-
-        <p>
-            Puntos obtenidos:
-        </p>
-
-        <strong id="modalPoints">
-            0
-        </strong>
-
-        <div class="modal-buttons">
-
-            <button
-                id="modalSelectBtn"
-                class="main-btn"
+            <div
+                id="modalPoints"
+                class="modal-points"
             >
-                ELEGIR OTRA PREGUNTA
-            </button>
+                0
+            </div>
+
+            <div class="modal-buttons">
+
+                <button
+                    id="modalSelectBtn"
+                    class="main-button"
+                >
+                    ELEGIR OTRA PREGUNTA
+                </button>
+
+            </div>
 
         </div>
 
     </div>
 
-</div>
 
-
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
 
 </html>
-```
