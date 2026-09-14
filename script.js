@@ -3,11 +3,13 @@
    SCRIPT.JS
    ========================================================= */
 
+
 /* =========================================================
    BANCO DE PREGUNTAS
    ========================================================= */
 
 const questions = [
+
     {
         id: 1,
         category: "Escuela",
@@ -280,11 +282,12 @@ const questions = [
             { text: "Salir con amigos", points: 10 }
         ]
     }
+
 ];
 
 
 /* =========================================================
-   ESTADO DEL JUEGO
+   GAME STATE
    ========================================================= */
 
 let selectedQuestion = null;
@@ -304,102 +307,163 @@ let usedQuestions = new Set();
 
 let selectedCategory = "Todas";
 
-/*
-   Estado del robo
-
-   false = todavía no hay robo
-   true  = el otro equipo tiene la oportunidad
-*/
 let stealActive = false;
 
 let stealTeam = null;
 
 let stealUsed = false;
 
+let roundFinished = false;
+
 
 /* =========================================================
-   ELEMENTOS DEL DOM
+   DOM
    ========================================================= */
 
-const startScreen = document.getElementById("startScreen");
-const questionSelectScreen = document.getElementById("questionSelectScreen");
-const gameScreen = document.getElementById("gameScreen");
+const startScreen =
+    document.getElementById("startScreen");
 
-const startGameBtn = document.getElementById("startGameBtn");
+const questionSelectScreen =
+    document.getElementById("questionSelectScreen");
 
-const questionList = document.getElementById("questionList");
-const questionSearch = document.getElementById("questionSearch");
+const gameScreen =
+    document.getElementById("gameScreen");
 
-const backToStartBtn = document.getElementById("backToStartBtn");
-const selectQuestionBtn = document.getElementById("selectQuestionBtn");
+const startGameBtn =
+    document.getElementById("startGameBtn");
 
-const questionText = document.getElementById("questionText");
-const answerBoard = document.getElementById("answerBoard");
+const questionList =
+    document.getElementById("questionList");
 
-const roundNumber = document.getElementById("roundNumber");
-const questionCounter = document.getElementById("questionCounter");
+const questionSearch =
+    document.getElementById("questionSearch");
 
-const roundPointsDisplay = document.getElementById("roundPoints");
+const backToStartBtn =
+    document.getElementById("backToStartBtn");
 
-const score1Display = document.getElementById("score1");
-const score2Display = document.getElementById("score2");
+const selectQuestionBtn =
+    document.getElementById("selectQuestionBtn");
 
-const revealBtn = document.getElementById("revealBtn");
-const strikeBtn = document.getElementById("strikeBtn");
-const resetRoundBtn = document.getElementById("resetRoundBtn");
+const questionText =
+    document.getElementById("questionText");
 
-const strike1 = document.getElementById("strike1");
-const strike2 = document.getElementById("strike2");
-const strike3 = document.getElementById("strike3");
+const answerBoard =
+    document.getElementById("answerBoard");
 
-const roundModal = document.getElementById("roundModal");
-const modalPoints = document.getElementById("modalPoints");
-const modalSelectBtn = document.getElementById("modalSelectBtn");
+const roundNumber =
+    document.getElementById("roundNumber");
+
+const questionCounter =
+    document.getElementById("questionCounter");
+
+const roundPointsDisplay =
+    document.getElementById("roundPoints");
+
+const score1Display =
+    document.getElementById("score1");
+
+const score2Display =
+    document.getElementById("score2");
+
+const revealBtn =
+    document.getElementById("revealBtn");
+
+const strikeBtn =
+    document.getElementById("strikeBtn");
+
+const resetRoundBtn =
+    document.getElementById("resetRoundBtn");
+
+const strike1 =
+    document.getElementById("strike1");
+
+const strike2 =
+    document.getElementById("strike2");
+
+const strike3 =
+    document.getElementById("strike3");
+
+const roundModal =
+    document.getElementById("roundModal");
+
+const modalPoints =
+    document.getElementById("modalPoints");
+
+const modalSelectBtn =
+    document.getElementById("modalSelectBtn");
+
+const team1Card =
+    document.getElementById("team1Card");
+
+const team2Card =
+    document.getElementById("team2Card");
 
 
 /* =========================================================
-   INICIAR JUEGO
+   START GAME
    ========================================================= */
 
 if (startGameBtn) {
-    startGameBtn.addEventListener("click", () => {
 
-        startScreen.classList.remove("active");
-        startScreen.style.display = "none";
+    startGameBtn.addEventListener(
+        "click",
+        () => {
 
-        questionSelectScreen.classList.add("active");
-        questionSelectScreen.style.display = "block";
+            startScreen.style.display =
+                "none";
 
-        renderQuestionList();
-    });
+            questionSelectScreen.style.display =
+                "block";
+
+            gameScreen.style.display =
+                "none";
+
+            renderQuestionList();
+
+        }
+    );
+
 }
 
 
 /* =========================================================
-   MOSTRAR LISTA DE PREGUNTAS
+   QUESTION LIST
    ========================================================= */
 
 function renderQuestionList() {
 
     if (!questionList) return;
 
-    const searchText = questionSearch
-        ? questionSearch.value.toLowerCase().trim()
-        : "";
+
+    const searchText =
+        questionSearch
+            ? questionSearch.value
+                .toLowerCase()
+                .trim()
+            : "";
+
 
     questionList.innerHTML = "";
 
-    const filteredQuestions = questions.filter(q => {
 
-        const matchesCategory =
-            selectedCategory === "Todas" ||
-            q.category === selectedCategory;
+    const filteredQuestions =
+        questions.filter(question => {
 
-        const matchesSearch =
-            q.question.toLowerCase().includes(searchText);
+            const categoryMatch =
+                selectedCategory === "Todas" ||
+                question.category === selectedCategory;
 
-        return matchesCategory && matchesSearch;
-    });
+
+            const searchMatch =
+                question.question
+                    .toLowerCase()
+                    .includes(searchText);
+
+
+            return categoryMatch &&
+                searchMatch;
+
+        });
 
 
     if (filteredQuestions.length === 0) {
@@ -411,21 +475,29 @@ function renderQuestionList() {
         `;
 
         return;
+
     }
 
 
     filteredQuestions.forEach(question => {
 
-        const option = document.createElement("div");
+        const option =
+            document.createElement("div");
 
-        option.className = "question-option";
+
+        option.className =
+            "question-option";
+
 
         if (usedQuestions.has(question.id)) {
+
             option.classList.add("used");
+
         }
 
 
         option.innerHTML = `
+
             <div class="question-option-number">
                 ${question.id}
             </div>
@@ -447,82 +519,103 @@ function renderQuestionList() {
             </div>
 
             <div class="question-option-arrow">
-                ${usedQuestions.has(question.id) ? "✓" : "→"}
+                ${usedQuestions.has(question.id)
+                    ? "✓"
+                    : "→"}
             </div>
+
         `;
 
 
-        option.addEventListener("click", () => {
+        option.addEventListener(
+            "click",
+            () => {
 
-            selectQuestion(question);
+                selectQuestion(question);
 
-        });
+            }
+        );
 
 
         questionList.appendChild(option);
 
     });
+
 }
 
 
 /* =========================================================
-   BUSCADOR
+   SEARCH
    ========================================================= */
 
 if (questionSearch) {
 
-    questionSearch.addEventListener("input", () => {
-
-        renderQuestionList();
-
-    });
+    questionSearch.addEventListener(
+        "input",
+        renderQuestionList
+    );
 
 }
 
 
 /* =========================================================
-   CATEGORÍAS
+   CATEGORY FILTER
    ========================================================= */
 
-const categoryButtons =
-    document.querySelectorAll(".category-btn");
+document
+    .querySelectorAll(".category-btn")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(".category-btn")
+                    .forEach(btn => {
+
+                        btn.classList.remove("active");
+
+                    });
 
 
-categoryButtons.forEach(button => {
+                button.classList.add("active");
 
-    button.addEventListener("click", () => {
 
-        categoryButtons.forEach(btn => {
-            btn.classList.remove("active");
-        });
+                selectedCategory =
+                    button.dataset.category ||
+                    "Todas";
 
-        button.classList.add("active");
 
-        selectedCategory =
-            button.dataset.category || "Todas";
+                renderQuestionList();
 
-        renderQuestionList();
+            }
+        );
 
     });
 
-});
-
 
 /* =========================================================
-   SELECCIONAR PREGUNTA
+   SELECT QUESTION
    ========================================================= */
 
 function selectQuestion(question) {
 
-    selectedQuestion = question;
+    selectedQuestion =
+        question;
 
-    usedQuestions.add(question.id);
 
-    questionSelectScreen.classList.remove("active");
-    questionSelectScreen.style.display = "none";
+    usedQuestions.add(
+        question.id
+    );
 
-    gameScreen.classList.add("active");
-    gameScreen.style.display = "block";
+
+    questionSelectScreen.style.display =
+        "none";
+
+    gameScreen.style.display =
+        "block";
+
 
     loadQuestion();
 
@@ -530,29 +623,24 @@ function selectQuestion(question) {
 
 
 /* =========================================================
-   CARGAR PREGUNTA
+   LOAD QUESTION
    ========================================================= */
 
 function loadQuestion() {
 
     if (!selectedQuestion) return;
 
+
     questionText.textContent =
         selectedQuestion.question;
 
 
-    if (roundNumber) {
-        roundNumber.textContent =
-            `PREGUNTA ${selectedQuestion.id}`;
-    }
+    roundNumber.textContent =
+        `PREGUNTA ${selectedQuestion.id}`;
 
 
-    if (questionCounter) {
-
-        questionCounter.textContent =
-            `${selectedQuestion.answers.length} respuestas`;
-
-    }
+    questionCounter.textContent =
+        `${selectedQuestion.answers.length} respuestas`;
 
 
     roundPoints = 0;
@@ -567,109 +655,122 @@ function loadQuestion() {
 
     stealUsed = false;
 
+    roundFinished = false;
+
 
     updateRoundPoints();
 
     updateStrikes();
 
+    updateCurrentTeamDisplay();
+
     createAnswerBoard();
 
     removeStealPanel();
 
-    updateCurrentTeamDisplay();
-
 }
 
 
 /* =========================================================
-   CREAR TABLERO DE RESPUESTAS
+   CREATE ANSWER BOARD
    ========================================================= */
 
 function createAnswerBoard() {
 
-    if (!answerBoard) return;
-
     answerBoard.innerHTML = "";
 
 
-    selectedQuestion.answers.forEach((answer, index) => {
+    selectedQuestion.answers.forEach(
+        (answer, index) => {
 
-        const answerNumber = index + 1;
-
-
-        const card = document.createElement("div");
-
-        card.className = "answer-card";
-
-        card.dataset.answer = answerNumber;
+            const number =
+                index + 1;
 
 
-        card.innerHTML = `
-
-            <div class="answer-number">
-                ${answerNumber}
-            </div>
-
-            <div class="answer-content">
-
-                <span class="answer-text">
-                    ${answer.text}
-                </span>
-
-                <span class="answer-points">
-                    ${answer.points}
-                </span>
-
-            </div>
-
-        `;
+            const card =
+                document.createElement("div");
 
 
-        card.addEventListener("click", () => {
-
-            revealAnswer(answerNumber);
-
-        });
+            card.className =
+                "answer-card";
 
 
-        answerBoard.appendChild(card);
+            card.dataset.answer =
+                number;
 
-    });
+
+            card.innerHTML = `
+
+                <div class="answer-number">
+                    ${number}
+                </div>
+
+                <div class="answer-content">
+
+                    <span class="answer-text">
+                        ${answer.text}
+                    </span>
+
+                    <span class="answer-points">
+                        ${answer.points}
+                    </span>
+
+                </div>
+
+            `;
+
+
+            card.addEventListener(
+                "click",
+                () => {
+
+                    revealAnswer(number);
+
+                }
+            );
+
+
+            answerBoard.appendChild(card);
+
+        }
+    );
 
 }
 
 
 /* =========================================================
-   REVELAR RESPUESTA
+   REVEAL ANSWER
    ========================================================= */
 
 function revealAnswer(number) {
 
     if (!selectedQuestion) return;
 
-    const index = number - 1;
+    if (roundFinished) return;
+
+
+    const index =
+        number - 1;
+
 
     if (
         index < 0 ||
         index >= selectedQuestion.answers.length
     ) {
+
         return;
+
     }
 
 
-    /*
-       Si ya fue revelada, no hacemos nada.
-    */
+    if (
+        revealedAnswers.includes(number)
+    ) {
 
-    if (revealedAnswers.includes(number)) {
         return;
+
     }
 
-
-    /*
-       Si estamos en robo, revelar una respuesta
-       significa que la respuesta fue encontrada.
-    */
 
     const answer =
         selectedQuestion.answers[index];
@@ -677,7 +778,7 @@ function revealAnswer(number) {
 
     const card =
         answerBoard.querySelector(
-            `.answer-card[data-answer="${number}"]`
+            `[data-answer="${number}"]`
         );
 
 
@@ -690,20 +791,19 @@ function revealAnswer(number) {
     card.classList.add("revealed");
 
 
-    /*
-       Animación de puntos
-    */
+    roundPoints +=
+        answer.points;
 
-    roundPoints += answer.points;
 
     updateRoundPoints();
+
 
     playSound("correct");
 
 
     /*
-       Si todas las respuestas fueron reveladas,
-       termina la ronda.
+       If all answers have been revealed,
+       the current team wins the round.
     */
 
     if (
@@ -711,11 +811,48 @@ function revealAnswer(number) {
         selectedQuestion.answers.length
     ) {
 
-        setTimeout(() => {
+        setTimeout(
+            () => {
 
-            finishRound();
+                awardRoundToTeam(
+                    currentTeam
+                );
 
-        }, 800);
+            },
+            700
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   REVEAL NEXT ANSWER
+   ========================================================= */
+
+function revealNextAnswer() {
+
+    if (!selectedQuestion) return;
+
+    if (roundFinished) return;
+
+
+    for (
+        let i = 1;
+        i <= selectedQuestion.answers.length;
+        i++
+    ) {
+
+        if (
+            !revealedAnswers.includes(i)
+        ) {
+
+            revealAnswer(i);
+
+            return;
+
+        }
 
     }
 
@@ -728,38 +865,30 @@ function revealAnswer(number) {
 
 if (strikeBtn) {
 
-    strikeBtn.addEventListener("click", () => {
-
-        addStrike();
-
-    });
+    strikeBtn.addEventListener(
+        "click",
+        addStrike
+    );
 
 }
 
 
 function addStrike() {
 
-    /*
-       Si el robo ya está activo, no se pueden agregar
-       más strikes al equipo original.
-    */
+    if (!selectedQuestion) return;
+
+    if (roundFinished) return;
 
     if (stealActive) return;
-
-    /*
-       Si la ronda ya terminó.
-    */
-
-    if (roundModal.classList.contains("active")) {
-        return;
-    }
 
 
     strikes++;
 
 
     if (strikes > 3) {
+
         strikes = 3;
+
     }
 
 
@@ -767,11 +896,6 @@ function addStrike() {
 
     playSound("wrong");
 
-
-    /*
-       Después de 3 strikes:
-       el otro equipo obtiene una oportunidad.
-    */
 
     if (strikes === 3) {
 
@@ -783,7 +907,7 @@ function addStrike() {
 
 
 /* =========================================================
-   ACTIVAR ROBO
+   ACTIVATE STEAL
    ========================================================= */
 
 function activateSteal() {
@@ -792,16 +916,18 @@ function activateSteal() {
 
     stealUsed = false;
 
+
     /*
-       Cambiar al otro equipo.
+       The other team gets the steal.
     */
 
     stealTeam =
-        currentTeam === 1 ? 2 : 1;
+        currentTeam === 1
+            ? 2
+            : 1;
 
 
     playSound("steal");
-
 
     createStealPanel();
 
@@ -809,7 +935,7 @@ function activateSteal() {
 
 
 /* =========================================================
-   CREAR PANEL DE ROBO
+   CREATE STEAL PANEL
    ========================================================= */
 
 function createStealPanel() {
@@ -817,11 +943,16 @@ function createStealPanel() {
     removeStealPanel();
 
 
-    const panel = document.createElement("div");
+    const panel =
+        document.createElement("div");
 
-    panel.id = "stealPanel";
 
-    panel.className = "steal-panel";
+    panel.id =
+        "stealPanel";
+
+
+    panel.className =
+        "steal-panel";
 
 
     panel.innerHTML = `
@@ -860,12 +991,13 @@ function createStealPanel() {
 
 
     /*
-       Lo colocamos antes del marcador.
-       Si no encuentra scoreboard, lo coloca al final.
+       Place the steal panel above the scoreboard.
     */
 
     const scoreboard =
-        document.querySelector(".scoreboard");
+        document.querySelector(
+            ".scoreboard"
+        );
 
 
     if (scoreboard) {
@@ -875,43 +1007,45 @@ function createStealPanel() {
             scoreboard
         );
 
-    } else {
+    }
+    else {
 
-        gameScreen.appendChild(panel);
+        gameScreen.appendChild(
+            panel
+        );
 
     }
 
 
-    const correctBtn =
-        document.getElementById("stealCorrectBtn");
-
-    const wrongBtn =
-        document.getElementById("stealWrongBtn");
-
-
-    correctBtn.addEventListener("click", () => {
-
-        stealCorrect();
-
-    });
+    document
+        .getElementById("stealCorrectBtn")
+        .addEventListener(
+            "click",
+            stealCorrect
+        );
 
 
-    wrongBtn.addEventListener("click", () => {
-
-        stealWrong();
-
-    });
+    document
+        .getElementById("stealWrongBtn")
+        .addEventListener(
+            "click",
+            stealWrong
+        );
 
 }
 
 
 /* =========================================================
-   ROBO CORRECTO
+   STEAL CORRECT
    ========================================================= */
 
 function stealCorrect() {
 
-    if (!stealActive || stealUsed) return;
+    if (!stealActive) return;
+
+    if (stealUsed) return;
+
+    if (roundFinished) return;
 
 
     stealUsed = true;
@@ -920,50 +1054,49 @@ function stealCorrect() {
 
 
     /*
-       El equipo que hizo el robo recibe todos
-       los puntos acumulados.
+       The stealing team receives
+       all accumulated round points.
     */
 
-    if (stealTeam === 1) {
-
-        score1 += roundPoints;
-
-    } else {
-
-        score2 += roundPoints;
-
-    }
-
-
-    updateScores();
+    awardPointsToTeam(
+        stealTeam,
+        roundPoints
+    );
 
 
     playSound("winner");
 
 
     updateStealPanel(
-        `¡ROBO CORRECTO!`,
+        "¡ROBO CORRECTO!",
         `EQUIPO ${stealTeam} GANA ${roundPoints} PUNTOS`,
         true
     );
 
 
-    setTimeout(() => {
+    setTimeout(
+        () => {
 
-        finishRound();
+            finishRound();
 
-    }, 1500);
+        },
+        1500
+    );
 
 }
 
 
 /* =========================================================
-   ROBO FALLIDO
+   STEAL WRONG
    ========================================================= */
 
 function stealWrong() {
 
-    if (!stealActive || stealUsed) return;
+    if (!stealActive) return;
+
+    if (stealUsed) return;
+
+    if (roundFinished) return;
 
 
     stealUsed = true;
@@ -972,51 +1105,303 @@ function stealWrong() {
 
 
     /*
-       Si el otro equipo falla el robo,
-       los puntos regresan al equipo original.
+       The original team receives
+       the accumulated points.
     */
 
-    if (currentTeam === 1) {
-
-        score1 += roundPoints;
-
-    } else {
-
-        score2 += roundPoints;
-
-    }
-
-
-    updateScores();
+    awardPointsToTeam(
+        currentTeam,
+        roundPoints
+    );
 
 
     playSound("wrong");
 
 
     updateStealPanel(
-        `ROBO FALLIDO`,
+        "ROBO FALLIDO",
         `EQUIPO ${currentTeam} GANA ${roundPoints} PUNTOS`,
         false
     );
 
 
-    setTimeout(() => {
+    setTimeout(
+        () => {
 
-        finishRound();
+            finishRound();
 
-    }, 1500);
+        },
+        1500
+    );
 
 }
 
 
 /* =========================================================
-   ACTUALIZAR PANEL DE ROBO
+   AWARD ROUND TO TEAM
    ========================================================= */
 
-function updateStealPanel(title, message, correct) {
+function awardRoundToTeam(team) {
+
+    if (roundFinished) return;
+
+
+    roundFinished = true;
+
+
+    awardPointsToTeam(
+        team,
+        roundPoints
+    );
+
+
+    playSound("winner");
+
+
+    setTimeout(
+        () => {
+
+            finishRound();
+
+        },
+        700
+    );
+
+}
+
+
+/* =========================================================
+   AWARD POINTS
+   ========================================================= */
+
+function awardPointsToTeam(
+    team,
+    points
+) {
+
+    if (team === 1) {
+
+        score1 += points;
+
+    }
+    else if (team === 2) {
+
+        score2 += points;
+
+    }
+
+
+    updateScores();
+
+}
+
+
+/* =========================================================
+   FINISH ROUND
+   ========================================================= */
+
+function finishRound() {
+
+    if (
+        roundModal.classList.contains("active")
+    ) {
+
+        return;
+
+    }
+
+
+    roundFinished = true;
+
+    stealActive = false;
+
+
+    updateRoundPoints();
+
+
+    modalPoints.textContent =
+        roundPoints;
+
+
+    roundModal.classList.add(
+        "active"
+    );
+
+
+    roundModal.style.display =
+        "flex";
+
+}
+
+
+/* =========================================================
+   UPDATE STRIKES
+   ========================================================= */
+
+function updateStrikes() {
+
+    const strikeElements = [
+
+        strike1,
+        strike2,
+        strike3
+
+    ];
+
+
+    strikeElements.forEach(
+        (element, index) => {
+
+            if (!element) return;
+
+
+            if (index < strikes) {
+
+                element.textContent =
+                    "X";
+
+                element.classList.add(
+                    "active"
+                );
+
+            }
+            else {
+
+                element.textContent =
+                    "";
+
+                element.classList.remove(
+                    "active"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   UPDATE ROUND POINTS
+   ========================================================= */
+
+function updateRoundPoints() {
+
+    if (roundPointsDisplay) {
+
+        roundPointsDisplay.textContent =
+            roundPoints;
+
+    }
+
+
+    if (modalPoints) {
+
+        modalPoints.textContent =
+            roundPoints;
+
+    }
+
+}
+
+
+/* =========================================================
+   UPDATE SCORES
+   ========================================================= */
+
+function updateScores() {
+
+    score1Display.textContent =
+        score1;
+
+
+    score2Display.textContent =
+        score2;
+
+}
+
+
+/* =========================================================
+   UPDATE CURRENT TEAM
+   ========================================================= */
+
+function updateCurrentTeamDisplay() {
+
+    if (team1Card) {
+
+        team1Card.classList.toggle(
+            "active-team",
+            currentTeam === 1
+        );
+
+    }
+
+
+    if (team2Card) {
+
+        team2Card.classList.toggle(
+            "active-team",
+            currentTeam === 2
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CHANGE TEAM
+   ========================================================= */
+
+function changeTeam() {
+
+    currentTeam =
+        currentTeam === 1
+            ? 2
+            : 1;
+
+
+    updateCurrentTeamDisplay();
+
+}
+
+
+/* =========================================================
+   REMOVE STEAL PANEL
+   ========================================================= */
+
+function removeStealPanel() {
 
     const panel =
-        document.getElementById("stealPanel");
+        document.getElementById(
+            "stealPanel"
+        );
+
+
+    if (panel) {
+
+        panel.remove();
+
+    }
+
+}
+
+
+/* =========================================================
+   UPDATE STEAL PANEL
+   ========================================================= */
+
+function updateStealPanel(
+    title,
+    message,
+    correct
+) {
+
+    const panel =
+        document.getElementById(
+            "stealPanel"
+        );
 
 
     if (!panel) return;
@@ -1037,158 +1422,15 @@ function updateStealPanel(title, message, correct) {
 
     if (correct) {
 
-        panel.classList.add("steal-success");
-
-    } else {
-
-        panel.classList.add("steal-failed");
-
-    }
-
-}
-
-
-/* =========================================================
-   ELIMINAR PANEL DE ROBO
-   ========================================================= */
-
-function removeStealPanel() {
-
-    const panel =
-        document.getElementById("stealPanel");
-
-
-    if (panel) {
-
-        panel.remove();
-
-    }
-
-}
-
-
-/* =========================================================
-   ACTUALIZAR STRIKES
-   ========================================================= */
-
-function updateStrikes() {
-
-    const strikesElements = [
-        strike1,
-        strike2,
-        strike3
-    ];
-
-
-    strikesElements.forEach((element, index) => {
-
-        if (!element) return;
-
-
-        if (index < strikes) {
-
-            element.textContent = "X";
-
-            element.classList.add("active");
-
-        } else {
-
-            element.textContent = "";
-
-            element.classList.remove("active");
-
-        }
-
-    });
-
-}
-
-
-/* =========================================================
-   ACTUALIZAR PUNTOS DE RONDA
-   ========================================================= */
-
-function updateRoundPoints() {
-
-    if (roundPointsDisplay) {
-
-        roundPointsDisplay.textContent =
-            roundPoints;
-
-    }
-
-
-    /*
-       También actualizamos el modal si existe.
-    */
-
-    if (modalPoints) {
-
-        modalPoints.textContent =
-            roundPoints;
-
-    }
-
-}
-
-
-/* =========================================================
-   ACTUALIZAR MARCADOR
-   ========================================================= */
-
-function updateScores() {
-
-    if (score1Display) {
-
-        score1Display.textContent =
-            score1;
-
-    }
-
-
-    if (score2Display) {
-
-        score2Display.textContent =
-            score2;
-
-    }
-
-}
-
-
-/* =========================================================
-   EQUIPO ACTUAL
-   ========================================================= */
-
-function updateCurrentTeamDisplay() {
-
-    /*
-       Intentamos encontrar elementos comunes
-       de la interfaz.
-    */
-
-    const team1 =
-        document.querySelector(".team-1");
-
-    const team2 =
-        document.querySelector(".team-2");
-
-
-    if (team1) {
-
-        team1.classList.toggle(
-            "active-team",
-            currentTeam === 1
+        panel.classList.add(
+            "steal-success"
         );
 
     }
+    else {
 
-
-    if (team2) {
-
-        team2.classList.toggle(
-            "active-team",
-            currentTeam === 2
+        panel.classList.add(
+            "steal-failed"
         );
 
     }
@@ -1197,104 +1439,49 @@ function updateCurrentTeamDisplay() {
 
 
 /* =========================================================
-   CAMBIAR EQUIPO
-   ========================================================= */
-
-function changeTeam() {
-
-    currentTeam =
-        currentTeam === 1 ? 2 : 1;
-
-
-    updateCurrentTeamDisplay();
-
-}
-
-
-/* =========================================================
-   TERMINAR RONDA
-   ========================================================= */
-
-function finishRound() {
-
-    /*
-       Si la ronda terminó por todas las respuestas,
-       los puntos todavía pertenecen al equipo actual.
-    */
-
-    if (
-        !stealUsed &&
-        revealedAnswers.length ===
-        selectedQuestion.answers.length
-    ) {
-
-        if (currentTeam === 1) {
-
-            score1 += roundPoints;
-
-        } else {
-
-            score2 += roundPoints;
-
-        }
-
-        updateScores();
-
-    }
-
-
-    updateRoundPoints();
-
-
-    /*
-       Mostrar modal.
-    */
-
-    if (modalPoints) {
-
-        modalPoints.textContent =
-            roundPoints;
-
-    }
-
-
-    if (roundModal) {
-
-        roundModal.classList.add("active");
-
-        roundModal.style.display = "flex";
-
-    }
-
-}
-
-
-/* =========================================================
-   REINICIAR RONDA
+   RESET ROUND
    ========================================================= */
 
 if (resetRoundBtn) {
 
-    resetRoundBtn.addEventListener("click", () => {
+    resetRoundBtn.addEventListener(
+        "click",
+        () => {
 
-        loadQuestion();
+            if (roundModal) {
 
-    });
+                roundModal.classList.remove(
+                    "active"
+                );
+
+                roundModal.style.display =
+                    "none";
+
+            }
+
+
+            loadQuestion();
+
+        }
+    );
 
 }
 
 
 /* =========================================================
-   ELEGIR OTRA PREGUNTA
+   SHOW QUESTION SELECTOR
    ========================================================= */
 
 function showQuestionSelector() {
 
     if (roundModal) {
 
-        roundModal.classList.remove("active");
+        roundModal.classList.remove(
+            "active"
+        );
 
-        roundModal.style.display = "none";
+        roundModal.style.display =
+            "none";
 
     }
 
@@ -1302,12 +1489,12 @@ function showQuestionSelector() {
     removeStealPanel();
 
 
-    gameScreen.classList.remove("active");
-    gameScreen.style.display = "none";
+    gameScreen.style.display =
+        "none";
 
 
-    questionSelectScreen.classList.add("active");
-    questionSelectScreen.style.display = "block";
+    questionSelectScreen.style.display =
+        "block";
 
 
     renderQuestionList();
@@ -1315,9 +1502,9 @@ function showQuestionSelector() {
 }
 
 
-/*
-   Botón de cambiar pregunta
-*/
+/* =========================================================
+   CHANGE QUESTION BUTTON
+   ========================================================= */
 
 if (selectQuestionBtn) {
 
@@ -1329,9 +1516,9 @@ if (selectQuestionBtn) {
 }
 
 
-/*
-   Botón del modal
-*/
+/* =========================================================
+   MODAL QUESTION BUTTON
+   ========================================================= */
 
 if (modalSelectBtn) {
 
@@ -1344,26 +1531,32 @@ if (modalSelectBtn) {
 
 
 /* =========================================================
-   VOLVER AL INICIO
+   BACK TO START
    ========================================================= */
 
 if (backToStartBtn) {
 
-    backToStartBtn.addEventListener("click", () => {
+    backToStartBtn.addEventListener(
+        "click",
+        () => {
 
-        questionSelectScreen.classList.remove("active");
-        questionSelectScreen.style.display = "none";
+            questionSelectScreen.style.display =
+                "none";
 
-        startScreen.classList.add("active");
-        startScreen.style.display = "flex";
+            gameScreen.style.display =
+                "none";
 
-    });
+            startScreen.style.display =
+                "flex";
+
+        }
+    );
 
 }
 
 
 /* =========================================================
-   SONIDOS
+   SOUND
    ========================================================= */
 
 function playSound(type) {
@@ -1385,41 +1578,55 @@ function playSound(type) {
         const oscillator =
             audioContext.createOscillator();
 
+
         const gain =
             audioContext.createGain();
 
 
         oscillator.connect(gain);
 
-        gain.connect(audioContext.destination);
+        gain.connect(
+            audioContext.destination
+        );
+
+
+        let frequency = 500;
 
 
         if (type === "correct") {
 
-            oscillator.frequency.value = 650;
-
-        }
-
-        else if (type === "wrong") {
-
-            oscillator.frequency.value = 180;
-
-        }
-
-        else if (type === "steal") {
-
-            oscillator.frequency.value = 450;
-
-        }
-
-        else if (type === "winner") {
-
-            oscillator.frequency.value = 850;
+            frequency = 650;
 
         }
 
 
-        oscillator.type = "sine";
+        if (type === "wrong") {
+
+            frequency = 180;
+
+        }
+
+
+        if (type === "steal") {
+
+            frequency = 450;
+
+        }
+
+
+        if (type === "winner") {
+
+            frequency = 850;
+
+        }
+
+
+        oscillator.frequency.value =
+            frequency;
+
+
+        oscillator.type =
+            "sine";
 
 
         gain.gain.setValueAtTime(
@@ -1448,7 +1655,6 @@ function playSound(type) {
         );
 
     }
-
     catch (error) {
 
         console.log(
@@ -1462,150 +1668,119 @@ function playSound(type) {
 
 
 /* =========================================================
-   TECLADO
+   KEYBOARD CONTROLS
    ========================================================= */
 
-document.addEventListener("keydown", event => {
+document.addEventListener(
+    "keydown",
+    event => {
 
-    /*
-       No ejecutar comandos mientras el usuario
-       escribe en el buscador.
-    */
+        /*
+           Don't trigger game controls while
+           typing in the search box.
+        */
 
-    if (
-        document.activeElement &&
-        (
-            document.activeElement.tagName === "INPUT" ||
-            document.activeElement.tagName === "TEXTAREA"
-        )
-    ) {
+        if (
+            document.activeElement &&
+            (
+                document.activeElement.tagName ===
+                    "INPUT" ||
+                document.activeElement.tagName ===
+                    "TEXTAREA"
+            )
+        ) {
 
-        return;
+            return;
 
-    }
-
-
-    const key =
-        event.key.toLowerCase();
-
-
-    /*
-       1 - 5
-       Revelar respuestas directamente
-    */
-
-    if (
-        ["1", "2", "3", "4", "5"]
-        .includes(event.key)
-    ) {
-
-        const number =
-            parseInt(event.key);
-
-        revealAnswer(number);
-
-        return;
-
-    }
+        }
 
 
-    /*
-       ESPACIO
-       Revelar la siguiente respuesta no revelada.
-    */
-
-    if (event.code === "Space") {
-
-        event.preventDefault();
-
-        revealNextAnswer();
-
-        return;
-
-    }
+        const key =
+            event.key.toLowerCase();
 
 
-    /*
-       X
-       Strike
-    */
+        /*
+           1-5 = reveal specific answer
+        */
 
-    if (key === "x") {
+        if (
+            ["1", "2", "3", "4", "5"]
+                .includes(event.key)
+        ) {
 
-        addStrike();
+            revealAnswer(
+                parseInt(event.key)
+            );
 
-        return;
+            return;
 
-    }
-
-
-    /*
-       R
-       Reiniciar ronda
-    */
-
-    if (key === "r") {
-
-        loadQuestion();
-
-        return;
-
-    }
+        }
 
 
-    /*
-       Q
-       Cambiar pregunta
-    */
+        /*
+           SPACE = next answer
+        */
 
-    if (key === "q") {
+        if (
+            event.code === "Space"
+        ) {
 
-        showQuestionSelector();
+            event.preventDefault();
 
-        return;
+            revealNextAnswer();
 
-    }
+            return;
 
-});
-
-
-/* =========================================================
-   REVELAR SIGUIENTE RESPUESTA
-   ========================================================= */
-
-function revealNextAnswer() {
-
-    if (!selectedQuestion) return;
+        }
 
 
-    for (
-        let i = 1;
-        i <= selectedQuestion.answers.length;
-        i++
-    ) {
+        /*
+           X = strike
+        */
 
-        if (!revealedAnswers.includes(i)) {
+        if (key === "x") {
 
-            revealAnswer(i);
+            addStrike();
+
+            return;
+
+        }
+
+
+        /*
+           R = reset round
+        */
+
+        if (key === "r") {
+
+            loadQuestion();
+
+            return;
+
+        }
+
+
+        /*
+           Q = question selector
+        */
+
+        if (key === "q") {
+
+            showQuestionSelector();
 
             return;
 
         }
 
     }
-
-}
+);
 
 
 /* =========================================================
-   INICIALIZACIÓN
+   INITIALIZE
    ========================================================= */
 
 function initializeGame() {
-
-    /*
-       Asegurar estados iniciales.
-    */
 
     score1 = 0;
 
@@ -1625,6 +1800,14 @@ function initializeGame() {
 
     selectedCategory = "Todas";
 
+    stealActive = false;
+
+    stealTeam = null;
+
+    stealUsed = false;
+
+    roundFinished = false;
+
 
     updateScores();
 
@@ -1632,26 +1815,31 @@ function initializeGame() {
 
     updateStrikes();
 
+    updateCurrentTeamDisplay();
+
 
     /*
-       Mostrar inicio.
+       Initial screen
     */
 
-    if (startScreen) {
+    startScreen.style.display =
+        "flex";
 
-        startScreen.style.display = "flex";
+    questionSelectScreen.style.display =
+        "none";
 
-    }
+    gameScreen.style.display =
+        "none";
 
-    if (questionSelectScreen) {
 
-        questionSelectScreen.style.display = "none";
+    if (roundModal) {
 
-    }
+        roundModal.classList.remove(
+            "active"
+        );
 
-    if (gameScreen) {
-
-        gameScreen.style.display = "none";
+        roundModal.style.display =
+            "none";
 
     }
 
@@ -1659,7 +1847,7 @@ function initializeGame() {
 
 
 /* =========================================================
-   INICIAR
+   START
    ========================================================= */
 
 initializeGame();
