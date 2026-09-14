@@ -1,15 +1,13 @@
-```javascript
 /* =========================================================
    100 ESTUDIANTES DIJERON
+   SCRIPT.JS
    ========================================================= */
-
 
 /* =========================================================
    BANCO DE PREGUNTAS
    ========================================================= */
 
 const questions = [
-
     {
         id: 1,
         category: "Escuela",
@@ -282,351 +280,249 @@ const questions = [
             { text: "Salir con amigos", points: 10 }
         ]
     }
-
 ];
 
 
 /* =========================================================
-   VARIABLES
-========================================================= */
+   ESTADO DEL JUEGO
+   ========================================================= */
 
 let selectedQuestion = null;
 
-let currentAnswer = 0;
+let currentTeam = 1;
+
+let score1 = 0;
+let score2 = 0;
 
 let roundPoints = 0;
 
-let score1 = 0;
-
-let score2 = 0;
-
 let strikes = 0;
+
+let revealedAnswers = [];
+
+let usedQuestions = new Set();
 
 let selectedCategory = "Todas";
 
+/*
+   Estado del robo
 
-/* =========================================================
-   ELEMENTOS
-========================================================= */
+   false = todavía no hay robo
+   true  = el otro equipo tiene la oportunidad
+*/
+let stealActive = false;
 
-const startScreen =
-    document.getElementById("startScreen");
+let stealTeam = null;
 
-const questionSelectScreen =
-    document.getElementById(
-        "questionSelectScreen"
-    );
-
-const gameScreen =
-    document.getElementById("gameScreen");
-
-const startGameBtn =
-    document.getElementById(
-        "startGameBtn"
-    );
-
-const questionList =
-    document.getElementById(
-        "questionList"
-    );
-
-const questionSearch =
-    document.getElementById(
-        "questionSearch"
-    );
-
-const backToStartBtn =
-    document.getElementById(
-        "backToStartBtn"
-    );
-
-const selectQuestionBtn =
-    document.getElementById(
-        "selectQuestionBtn"
-    );
-
-const questionText =
-    document.getElementById(
-        "questionText"
-    );
-
-const answerBoard =
-    document.getElementById(
-        "answerBoard"
-    );
-
-const roundNumber =
-    document.getElementById(
-        "roundNumber"
-    );
-
-const questionCounter =
-    document.getElementById(
-        "questionCounter"
-    );
-
-const roundPointsDisplay =
-    document.getElementById(
-        "roundPoints"
-    );
-
-const score1Display =
-    document.getElementById(
-        "score1"
-    );
-
-const score2Display =
-    document.getElementById(
-        "score2"
-    );
-
-const revealBtn =
-    document.getElementById(
-        "revealBtn"
-    );
-
-const strikeBtn =
-    document.getElementById(
-        "strikeBtn"
-    );
-
-const resetRoundBtn =
-    document.getElementById(
-        "resetRoundBtn"
-    );
-
-const roundModal =
-    document.getElementById(
-        "roundModal"
-    );
-
-const modalPoints =
-    document.getElementById(
-        "modalPoints"
-    );
-
-const modalSelectBtn =
-    document.getElementById(
-        "modalSelectBtn"
-    );
-
-const strikeElements = [
-
-    document.getElementById("strike1"),
-
-    document.getElementById("strike2"),
-
-    document.getElementById("strike3")
-
-];
+let stealUsed = false;
 
 
 /* =========================================================
-   ABRIR SELECTOR
-========================================================= */
+   ELEMENTOS DEL DOM
+   ========================================================= */
 
-startGameBtn.addEventListener(
-    "click",
-    () => {
+const startScreen = document.getElementById("startScreen");
+const questionSelectScreen = document.getElementById("questionSelectScreen");
+const gameScreen = document.getElementById("gameScreen");
 
-        startScreen.classList.add(
-            "hidden"
-        );
+const startGameBtn = document.getElementById("startGameBtn");
 
-        questionSelectScreen.classList.remove(
-            "hidden"
-        );
+const questionList = document.getElementById("questionList");
+const questionSearch = document.getElementById("questionSearch");
+
+const backToStartBtn = document.getElementById("backToStartBtn");
+const selectQuestionBtn = document.getElementById("selectQuestionBtn");
+
+const questionText = document.getElementById("questionText");
+const answerBoard = document.getElementById("answerBoard");
+
+const roundNumber = document.getElementById("roundNumber");
+const questionCounter = document.getElementById("questionCounter");
+
+const roundPointsDisplay = document.getElementById("roundPoints");
+
+const score1Display = document.getElementById("score1");
+const score2Display = document.getElementById("score2");
+
+const revealBtn = document.getElementById("revealBtn");
+const strikeBtn = document.getElementById("strikeBtn");
+const resetRoundBtn = document.getElementById("resetRoundBtn");
+
+const strike1 = document.getElementById("strike1");
+const strike2 = document.getElementById("strike2");
+const strike3 = document.getElementById("strike3");
+
+const roundModal = document.getElementById("roundModal");
+const modalPoints = document.getElementById("modalPoints");
+const modalSelectBtn = document.getElementById("modalSelectBtn");
+
+
+/* =========================================================
+   INICIAR JUEGO
+   ========================================================= */
+
+if (startGameBtn) {
+    startGameBtn.addEventListener("click", () => {
+
+        startScreen.classList.remove("active");
+        startScreen.style.display = "none";
+
+        questionSelectScreen.classList.add("active");
+        questionSelectScreen.style.display = "block";
 
         renderQuestionList();
-
-    }
-);
+    });
+}
 
 
 /* =========================================================
-   MOSTRAR PREGUNTAS
-========================================================= */
+   MOSTRAR LISTA DE PREGUNTAS
+   ========================================================= */
 
 function renderQuestionList() {
 
-    const search =
-        questionSearch.value
-            .toLowerCase()
-            .trim();
+    if (!questionList) return;
+
+    const searchText = questionSearch
+        ? questionSearch.value.toLowerCase().trim()
+        : "";
 
     questionList.innerHTML = "";
 
-    const filteredQuestions =
-        questions.filter(question => {
+    const filteredQuestions = questions.filter(q => {
 
-            const matchesCategory =
-                selectedCategory === "Todas" ||
-                question.category === selectedCategory;
+        const matchesCategory =
+            selectedCategory === "Todas" ||
+            q.category === selectedCategory;
 
-            const matchesSearch =
-                question.question
-                    .toLowerCase()
-                    .includes(search);
+        const matchesSearch =
+            q.question.toLowerCase().includes(searchText);
 
-            return (
-                matchesCategory &&
-                matchesSearch
-            );
+        return matchesCategory && matchesSearch;
+    });
+
+
+    if (filteredQuestions.length === 0) {
+
+        questionList.innerHTML = `
+            <div class="no-results">
+                No se encontraron preguntas.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    filteredQuestions.forEach(question => {
+
+        const option = document.createElement("div");
+
+        option.className = "question-option";
+
+        if (usedQuestions.has(question.id)) {
+            option.classList.add("used");
+        }
+
+
+        option.innerHTML = `
+            <div class="question-option-number">
+                ${question.id}
+            </div>
+
+            <div class="question-option-content">
+
+                <div class="question-option-category">
+                    ${question.category}
+                </div>
+
+                <div class="question-option-text">
+                    ${question.question}
+                </div>
+
+                <div class="question-option-answers">
+                    ${question.answers.length} respuestas
+                </div>
+
+            </div>
+
+            <div class="question-option-arrow">
+                ${usedQuestions.has(question.id) ? "✓" : "→"}
+            </div>
+        `;
+
+
+        option.addEventListener("click", () => {
+
+            selectQuestion(question);
 
         });
 
 
-    if (
-        filteredQuestions.length === 0
-    ) {
+        questionList.appendChild(option);
 
-        questionList.innerHTML = `
-
-            <div class="no-results">
-
-                No se encontraron preguntas.
-
-            </div>
-
-        `;
-
-        return;
-
-    }
+    });
+}
 
 
-    filteredQuestions.forEach(
-        (question, index) => {
+/* =========================================================
+   BUSCADOR
+   ========================================================= */
 
-            const card =
-                document.createElement("button");
+if (questionSearch) {
 
-            card.className =
-                "question-option";
+    questionSearch.addEventListener("input", () => {
 
-            card.innerHTML = `
+        renderQuestionList();
 
-                <div class="question-option-number">
-                    ${question.id}
-                </div>
-
-                <div class="question-option-content">
-
-                    <div class="question-option-category">
-                        ${question.category}
-                    </div>
-
-                    <div class="question-option-text">
-                        ${question.question}
-                    </div>
-
-                    <div class="question-option-answers">
-                        ${question.answers.length} respuestas
-                    </div>
-
-                </div>
-
-                <div class="question-option-arrow">
-                    →
-                </div>
-
-            `;
-
-
-            card.addEventListener(
-                "click",
-                () => {
-
-                    selectQuestion(
-                        question
-                    );
-
-                }
-            );
-
-
-            questionList.appendChild(
-                card
-            );
-
-        }
-    );
+    });
 
 }
 
 
 /* =========================================================
-   BUSCAR
-========================================================= */
+   CATEGORÍAS
+   ========================================================= */
 
-questionSearch.addEventListener(
-    "input",
-    () => {
+const categoryButtons =
+    document.querySelectorAll(".category-btn");
+
+
+categoryButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        categoryButtons.forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        selectedCategory =
+            button.dataset.category || "Todas";
 
         renderQuestionList();
 
-    }
-);
-
-
-/* =========================================================
-   CATEGORÍAS
-========================================================= */
-
-document
-    .querySelectorAll(".category-btn")
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                document
-                    .querySelectorAll(
-                        ".category-btn"
-                    )
-                    .forEach(btn => {
-
-                        btn.classList.remove(
-                            "active"
-                        );
-
-                    });
-
-
-                button.classList.add(
-                    "active"
-                );
-
-
-                selectedCategory =
-                    button.dataset.category;
-
-
-                renderQuestionList();
-
-            }
-        );
-
     });
+
+});
 
 
 /* =========================================================
    SELECCIONAR PREGUNTA
-========================================================= */
+   ========================================================= */
 
 function selectQuestion(question) {
 
-    selectedQuestion =
-        question;
+    selectedQuestion = question;
 
-    questionSelectScreen.classList.add(
-        "hidden"
-    );
+    usedQuestions.add(question.id);
 
-    gameScreen.classList.remove(
-        "hidden"
-    );
+    questionSelectScreen.classList.remove("active");
+    questionSelectScreen.style.display = "none";
+
+    gameScreen.classList.add("active");
+    gameScreen.style.display = "block";
 
     loadQuestion();
 
@@ -635,318 +531,404 @@ function selectQuestion(question) {
 
 /* =========================================================
    CARGAR PREGUNTA
-========================================================= */
+   ========================================================= */
 
 function loadQuestion() {
 
-    currentAnswer = 0;
+    if (!selectedQuestion) return;
+
+    questionText.textContent =
+        selectedQuestion.question;
+
+
+    if (roundNumber) {
+        roundNumber.textContent =
+            `PREGUNTA ${selectedQuestion.id}`;
+    }
+
+
+    if (questionCounter) {
+
+        questionCounter.textContent =
+            `${selectedQuestion.answers.length} respuestas`;
+
+    }
+
 
     roundPoints = 0;
 
     strikes = 0;
 
-    questionText.textContent =
-        selectedQuestion.question;
+    revealedAnswers = [];
 
-    roundNumber.textContent =
-        selectedQuestion.id;
+    stealActive = false;
 
-    questionCounter.textContent =
-        `Pregunta #${selectedQuestion.id}`;
+    stealTeam = null;
 
-    roundPointsDisplay.textContent =
-        "0";
+    stealUsed = false;
 
-    revealBtn.textContent =
-        "REVELAR RESPUESTA";
 
-    resetStrikes();
+    updateRoundPoints();
+
+    updateStrikes();
 
     createAnswerBoard();
 
+    removeStealPanel();
+
+    updateCurrentTeamDisplay();
+
 }
 
 
 /* =========================================================
-   CREAR TABLERO
-========================================================= */
+   CREAR TABLERO DE RESPUESTAS
+   ========================================================= */
 
 function createAnswerBoard() {
 
+    if (!answerBoard) return;
+
     answerBoard.innerHTML = "";
 
-    selectedQuestion.answers.forEach(
-        (answer, index) => {
 
-            const answerElement =
-                document.createElement("div");
+    selectedQuestion.answers.forEach((answer, index) => {
 
-            answerElement.className =
-                "answer hidden-answer";
+        const answerNumber = index + 1;
 
 
-            answerElement.innerHTML = `
+        const card = document.createElement("div");
 
-                <div class="answer-number">
-                    ${index + 1}
-                </div>
+        card.className = "answer-card";
 
-                <div class="answer-content">
-
-                    <span class="answer-hidden-mark">
-                        ?
-                    </span>
-
-                    <span class="answer-text">
-                        ${answer.text}
-                    </span>
-
-                    <span class="answer-points">
-                        ${answer.points}
-                    </span>
-
-                </div>
-
-            `;
+        card.dataset.answer = answerNumber;
 
 
-            answerBoard.appendChild(
-                answerElement
-            );
+        card.innerHTML = `
 
-        }
-    );
+            <div class="answer-number">
+                ${answerNumber}
+            </div>
+
+            <div class="answer-content">
+
+                <span class="answer-text">
+                    ${answer.text}
+                </span>
+
+                <span class="answer-points">
+                    ${answer.points}
+                </span>
+
+            </div>
+
+        `;
+
+
+        card.addEventListener("click", () => {
+
+            revealAnswer(answerNumber);
+
+        });
+
+
+        answerBoard.appendChild(card);
+
+    });
 
 }
 
 
 /* =========================================================
-   REVELAR
-========================================================= */
+   REVELAR RESPUESTA
+   ========================================================= */
 
-revealBtn.addEventListener(
-    "click",
-    () => {
+function revealAnswer(number) {
 
-        const answers =
-            selectedQuestion.answers;
+    if (!selectedQuestion) return;
+
+    const index = number - 1;
+
+    if (
+        index < 0 ||
+        index >= selectedQuestion.answers.length
+    ) {
+        return;
+    }
 
 
-        if (
-            currentAnswer >= answers.length
-        ) {
+    /*
+       Si ya fue revelada, no hacemos nada.
+    */
+
+    if (revealedAnswers.includes(number)) {
+        return;
+    }
+
+
+    /*
+       Si estamos en robo, revelar una respuesta
+       significa que la respuesta fue encontrada.
+    */
+
+    const answer =
+        selectedQuestion.answers[index];
+
+
+    const card =
+        answerBoard.querySelector(
+            `.answer-card[data-answer="${number}"]`
+        );
+
+
+    if (!card) return;
+
+
+    revealedAnswers.push(number);
+
+
+    card.classList.add("revealed");
+
+
+    /*
+       Animación de puntos
+    */
+
+    roundPoints += answer.points;
+
+    updateRoundPoints();
+
+    playSound("correct");
+
+
+    /*
+       Si todas las respuestas fueron reveladas,
+       termina la ronda.
+    */
+
+    if (
+        revealedAnswers.length ===
+        selectedQuestion.answers.length
+    ) {
+
+        setTimeout(() => {
 
             finishRound();
 
-            return;
-
-        }
-
-
-        const answerElement =
-            answerBoard.children[
-                currentAnswer
-            ];
-
-
-        answerElement.classList.remove(
-            "hidden-answer"
-        );
-
-
-        answerElement.classList.add(
-            "revealed"
-        );
-
-
-        roundPoints +=
-            answers[currentAnswer].points;
-
-
-        roundPointsDisplay.textContent =
-            roundPoints;
-
-
-        currentAnswer++;
-
-
-        playSound("reveal");
-
-
-        if (
-            currentAnswer >= answers.length
-        ) {
-
-            revealBtn.textContent =
-                "RONDA TERMINADA";
-
-        }
+        }, 800);
 
     }
-);
-
-
-/* =========================================================
-   ERROR
-========================================================= */
-
-strikeBtn.addEventListener(
-    "click",
-    () => {
-
-        if (strikes >= 3) {
-
-            return;
-
-        }
-
-
-        strikeElements[strikes]
-            .classList.add("active");
-
-
-        strikes++;
-
-
-        playSound("strike");
-
-
-        if (strikes === 3) {
-
-            setTimeout(
-                () => {
-
-                    finishRound();
-
-                },
-                800
-            );
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   REINICIAR
-========================================================= */
-
-resetRoundBtn.addEventListener(
-    "click",
-    () => {
-
-        loadQuestion();
-
-    }
-);
-
-
-/* =========================================================
-   CAMBIAR PREGUNTA
-========================================================= */
-
-selectQuestionBtn.addEventListener(
-    "click",
-    () => {
-
-        gameScreen.classList.add(
-            "hidden"
-        );
-
-        questionSelectScreen.classList.remove(
-            "hidden"
-        );
-
-        renderQuestionList();
-
-    }
-);
-
-
-/* =========================================================
-   TERMINAR RONDA
-========================================================= */
-
-function finishRound() {
-
-    modalPoints.textContent =
-        roundPoints;
-
-    roundModal.classList.remove(
-        "hidden"
-    );
 
 }
 
 
 /* =========================================================
-   MODAL → SELECTOR
-========================================================= */
+   STRIKE
+   ========================================================= */
 
-modalSelectBtn.addEventListener(
-    "click",
-    () => {
+if (strikeBtn) {
 
-        roundModal.classList.add(
-            "hidden"
-        );
+    strikeBtn.addEventListener("click", () => {
 
-        gameScreen.classList.add(
-            "hidden"
-        );
+        addStrike();
 
-        questionSelectScreen.classList.remove(
-            "hidden"
-        );
+    });
 
-        renderQuestionList();
-
-    }
-);
+}
 
 
-/* =========================================================
-   VOLVER AL INICIO
-========================================================= */
+function addStrike() {
 
-backToStartBtn.addEventListener(
-    "click",
-    () => {
+    /*
+       Si el robo ya está activo, no se pueden agregar
+       más strikes al equipo original.
+    */
 
-        questionSelectScreen.classList.add(
-            "hidden"
-        );
+    if (stealActive) return;
 
-        startScreen.classList.remove(
-            "hidden"
-        );
+    /*
+       Si la ronda ya terminó.
+    */
 
-    }
-);
-
-
-/* =========================================================
-   AGREGAR PUNTOS
-========================================================= */
-
-function addScore(team) {
-
-    if (roundPoints <= 0) {
-
+    if (roundModal.classList.contains("active")) {
         return;
+    }
+
+
+    strikes++;
+
+
+    if (strikes > 3) {
+        strikes = 3;
+    }
+
+
+    updateStrikes();
+
+    playSound("wrong");
+
+
+    /*
+       Después de 3 strikes:
+       el otro equipo obtiene una oportunidad.
+    */
+
+    if (strikes === 3) {
+
+        activateSteal();
+
+    }
+
+}
+
+
+/* =========================================================
+   ACTIVAR ROBO
+   ========================================================= */
+
+function activateSteal() {
+
+    stealActive = true;
+
+    stealUsed = false;
+
+    /*
+       Cambiar al otro equipo.
+    */
+
+    stealTeam =
+        currentTeam === 1 ? 2 : 1;
+
+
+    playSound("steal");
+
+
+    createStealPanel();
+
+}
+
+
+/* =========================================================
+   CREAR PANEL DE ROBO
+   ========================================================= */
+
+function createStealPanel() {
+
+    removeStealPanel();
+
+
+    const panel = document.createElement("div");
+
+    panel.id = "stealPanel";
+
+    panel.className = "steal-panel";
+
+
+    panel.innerHTML = `
+
+        <div class="steal-title">
+            ¡3 STRIKES!
+        </div>
+
+        <div class="steal-message">
+            EQUIPO ${stealTeam} TIENE UNA OPORTUNIDAD
+        </div>
+
+        <div class="steal-subtitle">
+            ¿El equipo encontró una respuesta?
+        </div>
+
+        <div class="steal-buttons">
+
+            <button
+                id="stealCorrectBtn"
+                class="steal-correct-btn"
+            >
+                ROBO CORRECTO
+            </button>
+
+            <button
+                id="stealWrongBtn"
+                class="steal-wrong-btn"
+            >
+                ROBO FALLIDO
+            </button>
+
+        </div>
+
+    `;
+
+
+    /*
+       Lo colocamos antes del marcador.
+       Si no encuentra scoreboard, lo coloca al final.
+    */
+
+    const scoreboard =
+        document.querySelector(".scoreboard");
+
+
+    if (scoreboard) {
+
+        scoreboard.parentNode.insertBefore(
+            panel,
+            scoreboard
+        );
+
+    } else {
+
+        gameScreen.appendChild(panel);
 
     }
 
 
-    if (team === 1) {
+    const correctBtn =
+        document.getElementById("stealCorrectBtn");
+
+    const wrongBtn =
+        document.getElementById("stealWrongBtn");
+
+
+    correctBtn.addEventListener("click", () => {
+
+        stealCorrect();
+
+    });
+
+
+    wrongBtn.addEventListener("click", () => {
+
+        stealWrong();
+
+    });
+
+}
+
+
+/* =========================================================
+   ROBO CORRECTO
+   ========================================================= */
+
+function stealCorrect() {
+
+    if (!stealActive || stealUsed) return;
+
+
+    stealUsed = true;
+
+    stealActive = false;
+
+
+    /*
+       El equipo que hizo el robo recibe todos
+       los puntos acumulados.
+    */
+
+    if (stealTeam === 1) {
 
         score1 += roundPoints;
 
-    }
-
-
-    if (team === 2) {
+    } else {
 
         score2 += roundPoints;
 
@@ -955,158 +937,523 @@ function addScore(team) {
 
     updateScores();
 
-    playSound("score");
+
+    playSound("winner");
+
+
+    updateStealPanel(
+        `¡ROBO CORRECTO!`,
+        `EQUIPO ${stealTeam} GANA ${roundPoints} PUNTOS`,
+        true
+    );
+
+
+    setTimeout(() => {
+
+        finishRound();
+
+    }, 1500);
 
 }
 
 
 /* =========================================================
-   ACTUALIZAR MARCADORES
-========================================================= */
+   ROBO FALLIDO
+   ========================================================= */
+
+function stealWrong() {
+
+    if (!stealActive || stealUsed) return;
+
+
+    stealUsed = true;
+
+    stealActive = false;
+
+
+    /*
+       Si el otro equipo falla el robo,
+       los puntos regresan al equipo original.
+    */
+
+    if (currentTeam === 1) {
+
+        score1 += roundPoints;
+
+    } else {
+
+        score2 += roundPoints;
+
+    }
+
+
+    updateScores();
+
+
+    playSound("wrong");
+
+
+    updateStealPanel(
+        `ROBO FALLIDO`,
+        `EQUIPO ${currentTeam} GANA ${roundPoints} PUNTOS`,
+        false
+    );
+
+
+    setTimeout(() => {
+
+        finishRound();
+
+    }, 1500);
+
+}
+
+
+/* =========================================================
+   ACTUALIZAR PANEL DE ROBO
+   ========================================================= */
+
+function updateStealPanel(title, message, correct) {
+
+    const panel =
+        document.getElementById("stealPanel");
+
+
+    if (!panel) return;
+
+
+    panel.innerHTML = `
+
+        <div class="steal-title">
+            ${title}
+        </div>
+
+        <div class="steal-message">
+            ${message}
+        </div>
+
+    `;
+
+
+    if (correct) {
+
+        panel.classList.add("steal-success");
+
+    } else {
+
+        panel.classList.add("steal-failed");
+
+    }
+
+}
+
+
+/* =========================================================
+   ELIMINAR PANEL DE ROBO
+   ========================================================= */
+
+function removeStealPanel() {
+
+    const panel =
+        document.getElementById("stealPanel");
+
+
+    if (panel) {
+
+        panel.remove();
+
+    }
+
+}
+
+
+/* =========================================================
+   ACTUALIZAR STRIKES
+   ========================================================= */
+
+function updateStrikes() {
+
+    const strikesElements = [
+        strike1,
+        strike2,
+        strike3
+    ];
+
+
+    strikesElements.forEach((element, index) => {
+
+        if (!element) return;
+
+
+        if (index < strikes) {
+
+            element.textContent = "X";
+
+            element.classList.add("active");
+
+        } else {
+
+            element.textContent = "";
+
+            element.classList.remove("active");
+
+        }
+
+    });
+
+}
+
+
+/* =========================================================
+   ACTUALIZAR PUNTOS DE RONDA
+   ========================================================= */
+
+function updateRoundPoints() {
+
+    if (roundPointsDisplay) {
+
+        roundPointsDisplay.textContent =
+            roundPoints;
+
+    }
+
+
+    /*
+       También actualizamos el modal si existe.
+    */
+
+    if (modalPoints) {
+
+        modalPoints.textContent =
+            roundPoints;
+
+    }
+
+}
+
+
+/* =========================================================
+   ACTUALIZAR MARCADOR
+   ========================================================= */
 
 function updateScores() {
 
-    score1Display.textContent =
-        score1;
+    if (score1Display) {
 
-    score2Display.textContent =
-        score2;
+        score1Display.textContent =
+            score1;
+
+    }
+
+
+    if (score2Display) {
+
+        score2Display.textContent =
+            score2;
+
+    }
 
 }
 
 
 /* =========================================================
-   REINICIAR ERRORES
-========================================================= */
+   EQUIPO ACTUAL
+   ========================================================= */
 
-function resetStrikes() {
+function updateCurrentTeamDisplay() {
 
-    strikes = 0;
+    /*
+       Intentamos encontrar elementos comunes
+       de la interfaz.
+    */
 
-    strikeElements.forEach(
-        strike => {
+    const team1 =
+        document.querySelector(".team-1");
 
-            strike.classList.remove(
-                "active"
-            );
+    const team2 =
+        document.querySelector(".team-2");
+
+
+    if (team1) {
+
+        team1.classList.toggle(
+            "active-team",
+            currentTeam === 1
+        );
+
+    }
+
+
+    if (team2) {
+
+        team2.classList.toggle(
+            "active-team",
+            currentTeam === 2
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CAMBIAR EQUIPO
+   ========================================================= */
+
+function changeTeam() {
+
+    currentTeam =
+        currentTeam === 1 ? 2 : 1;
+
+
+    updateCurrentTeamDisplay();
+
+}
+
+
+/* =========================================================
+   TERMINAR RONDA
+   ========================================================= */
+
+function finishRound() {
+
+    /*
+       Si la ronda terminó por todas las respuestas,
+       los puntos todavía pertenecen al equipo actual.
+    */
+
+    if (
+        !stealUsed &&
+        revealedAnswers.length ===
+        selectedQuestion.answers.length
+    ) {
+
+        if (currentTeam === 1) {
+
+            score1 += roundPoints;
+
+        } else {
+
+            score2 += roundPoints;
 
         }
+
+        updateScores();
+
+    }
+
+
+    updateRoundPoints();
+
+
+    /*
+       Mostrar modal.
+    */
+
+    if (modalPoints) {
+
+        modalPoints.textContent =
+            roundPoints;
+
+    }
+
+
+    if (roundModal) {
+
+        roundModal.classList.add("active");
+
+        roundModal.style.display = "flex";
+
+    }
+
+}
+
+
+/* =========================================================
+   REINICIAR RONDA
+   ========================================================= */
+
+if (resetRoundBtn) {
+
+    resetRoundBtn.addEventListener("click", () => {
+
+        loadQuestion();
+
+    });
+
+}
+
+
+/* =========================================================
+   ELEGIR OTRA PREGUNTA
+   ========================================================= */
+
+function showQuestionSelector() {
+
+    if (roundModal) {
+
+        roundModal.classList.remove("active");
+
+        roundModal.style.display = "none";
+
+    }
+
+
+    removeStealPanel();
+
+
+    gameScreen.classList.remove("active");
+    gameScreen.style.display = "none";
+
+
+    questionSelectScreen.classList.add("active");
+    questionSelectScreen.style.display = "block";
+
+
+    renderQuestionList();
+
+}
+
+
+/*
+   Botón de cambiar pregunta
+*/
+
+if (selectQuestionBtn) {
+
+    selectQuestionBtn.addEventListener(
+        "click",
+        showQuestionSelector
     );
+
+}
+
+
+/*
+   Botón del modal
+*/
+
+if (modalSelectBtn) {
+
+    modalSelectBtn.addEventListener(
+        "click",
+        showQuestionSelector
+    );
+
+}
+
+
+/* =========================================================
+   VOLVER AL INICIO
+   ========================================================= */
+
+if (backToStartBtn) {
+
+    backToStartBtn.addEventListener("click", () => {
+
+        questionSelectScreen.classList.remove("active");
+        questionSelectScreen.style.display = "none";
+
+        startScreen.classList.add("active");
+        startScreen.style.display = "flex";
+
+    });
 
 }
 
 
 /* =========================================================
    SONIDOS
-========================================================= */
-
-let audioContext = null;
-
-
-function getAudioContext() {
-
-    if (!audioContext) {
-
-        audioContext =
-            new (
-                window.AudioContext ||
-                window.webkitAudioContext
-            )();
-
-    }
-
-    return audioContext;
-
-}
-
-
-function beep(
-    frequency,
-    duration,
-    type = "sine"
-) {
-
-    const ctx =
-        getAudioContext();
-
-
-    const oscillator =
-        ctx.createOscillator();
-
-
-    const gain =
-        ctx.createGain();
-
-
-    oscillator.type =
-        type;
-
-
-    oscillator.frequency.value =
-        frequency;
-
-
-    gain.gain.setValueAtTime(
-        0.08,
-        ctx.currentTime
-    );
-
-
-    gain.gain.exponentialRampToValueAtTime(
-        0.001,
-        ctx.currentTime + duration
-    );
-
-
-    oscillator.connect(gain);
-
-    gain.connect(
-        ctx.destination
-    );
-
-
-    oscillator.start();
-
-
-    oscillator.stop(
-        ctx.currentTime + duration
-    );
-
-}
-
+   ========================================================= */
 
 function playSound(type) {
 
-    if (type === "reveal") {
+    try {
 
-        beep(520, 0.1);
+        const AudioContext =
+            window.AudioContext ||
+            window.webkitAudioContext;
 
-        setTimeout(
-            () => beep(700, 0.15),
-            100
+
+        if (!AudioContext) return;
+
+
+        const audioContext =
+            new AudioContext();
+
+
+        const oscillator =
+            audioContext.createOscillator();
+
+        const gain =
+            audioContext.createGain();
+
+
+        oscillator.connect(gain);
+
+        gain.connect(audioContext.destination);
+
+
+        if (type === "correct") {
+
+            oscillator.frequency.value = 650;
+
+        }
+
+        else if (type === "wrong") {
+
+            oscillator.frequency.value = 180;
+
+        }
+
+        else if (type === "steal") {
+
+            oscillator.frequency.value = 450;
+
+        }
+
+        else if (type === "winner") {
+
+            oscillator.frequency.value = 850;
+
+        }
+
+
+        oscillator.type = "sine";
+
+
+        gain.gain.setValueAtTime(
+            0.001,
+            audioContext.currentTime
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.15,
+            audioContext.currentTime + 0.02
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.001,
+            audioContext.currentTime + 0.35
+        );
+
+
+        oscillator.start();
+
+
+        oscillator.stop(
+            audioContext.currentTime + 0.35
         );
 
     }
 
+    catch (error) {
 
-    if (type === "strike") {
-
-        beep(
-            120,
-            0.5,
-            "sawtooth"
-        );
-
-    }
-
-
-    if (type === "score") {
-
-        beep(500, 0.1);
-
-        setTimeout(
-            () => beep(700, 0.15),
-            100
+        console.log(
+            "Audio no disponible:",
+            error
         );
 
     }
@@ -1115,88 +1462,204 @@ function playSound(type) {
 
 
 /* =========================================================
-   ATAJOS DE TECLADO
-=========================================================
+   TECLADO
+   ========================================================= */
 
-   ESPACIO = Revelar
-   X       = Error
-   R       = Reiniciar
-   Q       = Cambiar pregunta
-   1       = Equipo 1
-   2       = Equipo 2
+document.addEventListener("keydown", event => {
 
-========================================================= */
+    /*
+       No ejecutar comandos mientras el usuario
+       escribe en el buscador.
+    */
 
-document.addEventListener(
-    "keydown",
-    event => {
+    if (
+        document.activeElement &&
+        (
+            document.activeElement.tagName === "INPUT" ||
+            document.activeElement.tagName === "TEXTAREA"
+        )
+    ) {
 
-        if (
-            gameScreen.classList.contains(
-                "hidden"
-            )
-        ) {
+        return;
+
+    }
+
+
+    const key =
+        event.key.toLowerCase();
+
+
+    /*
+       1 - 5
+       Revelar respuestas directamente
+    */
+
+    if (
+        ["1", "2", "3", "4", "5"]
+        .includes(event.key)
+    ) {
+
+        const number =
+            parseInt(event.key);
+
+        revealAnswer(number);
+
+        return;
+
+    }
+
+
+    /*
+       ESPACIO
+       Revelar la siguiente respuesta no revelada.
+    */
+
+    if (event.code === "Space") {
+
+        event.preventDefault();
+
+        revealNextAnswer();
+
+        return;
+
+    }
+
+
+    /*
+       X
+       Strike
+    */
+
+    if (key === "x") {
+
+        addStrike();
+
+        return;
+
+    }
+
+
+    /*
+       R
+       Reiniciar ronda
+    */
+
+    if (key === "r") {
+
+        loadQuestion();
+
+        return;
+
+    }
+
+
+    /*
+       Q
+       Cambiar pregunta
+    */
+
+    if (key === "q") {
+
+        showQuestionSelector();
+
+        return;
+
+    }
+
+});
+
+
+/* =========================================================
+   REVELAR SIGUIENTE RESPUESTA
+   ========================================================= */
+
+function revealNextAnswer() {
+
+    if (!selectedQuestion) return;
+
+
+    for (
+        let i = 1;
+        i <= selectedQuestion.answers.length;
+        i++
+    ) {
+
+        if (!revealedAnswers.includes(i)) {
+
+            revealAnswer(i);
 
             return;
 
         }
 
+    }
 
-        if (
-            event.code === "Space"
-        ) {
-
-            event.preventDefault();
-
-            revealBtn.click();
-
-        }
+}
 
 
-        if (
-            event.key.toLowerCase() === "x"
-        ) {
+/* =========================================================
+   INICIALIZACIÓN
+   ========================================================= */
 
-            strikeBtn.click();
+function initializeGame() {
 
-        }
+    /*
+       Asegurar estados iniciales.
+    */
 
+    score1 = 0;
 
-        if (
-            event.key.toLowerCase() === "r"
-        ) {
+    score2 = 0;
 
-            resetRoundBtn.click();
+    currentTeam = 1;
 
-        }
+    roundPoints = 0;
 
+    strikes = 0;
 
-        if (
-            event.key.toLowerCase() === "q"
-        ) {
+    selectedQuestion = null;
 
-            selectQuestionBtn.click();
+    revealedAnswers = [];
 
-        }
+    usedQuestions.clear();
 
-
-        if (
-            event.key === "1"
-        ) {
-
-            addScore(1);
-
-        }
+    selectedCategory = "Todas";
 
 
-        if (
-            event.key === "2"
-        ) {
+    updateScores();
 
-            addScore(2);
+    updateRoundPoints();
 
-        }
+    updateStrikes();
+
+
+    /*
+       Mostrar inicio.
+    */
+
+    if (startScreen) {
+
+        startScreen.style.display = "flex";
 
     }
-);
-```
+
+    if (questionSelectScreen) {
+
+        questionSelectScreen.style.display = "none";
+
+    }
+
+    if (gameScreen) {
+
+        gameScreen.style.display = "none";
+
+    }
+
+}
+
+
+/* =========================================================
+   INICIAR
+   ========================================================= */
+
+initializeGame();
