@@ -1178,3 +1178,527 @@ footer {
     }
 
 }
+
+/* =====================================================
+   SELECTOR DE PREGUNTAS
+===================================================== */
+
+.question-select-screen {
+
+    min-height: 100vh;
+
+    padding: 35px 20px;
+
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(158, 33, 71, 0.25),
+            transparent 45%
+        ),
+        linear-gradient(
+            135deg,
+            #17181b,
+            #3b0715,
+            #1c1d20
+        );
+
+    overflow-y: auto;
+
+}
+
+
+.selection-container {
+
+    width: min(1100px, 100%);
+
+    margin: auto;
+
+}
+
+
+.selection-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.selection-logo {
+
+    width: 80px;
+
+    height: 80px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f5f5f5,
+            #999
+        );
+
+    border: 5px solid var(--burgundy);
+
+    color: var(--burgundy-dark);
+
+    font-size: 28px;
+
+    font-weight: 900;
+
+    box-shadow:
+        0 0 0 3px var(--silver);
+
+}
+
+
+.selection-header h1 {
+
+    margin: 0;
+
+    font-size: clamp(25px, 4vw, 42px);
+
+    letter-spacing: 2px;
+
+}
+
+
+.selection-header p {
+
+    margin: 8px 0 0;
+
+    color: var(--silver);
+
+}
+
+
+/* =====================================================
+   CATEGORÍAS
+===================================================== */
+
+.question-filters {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.category-btn {
+
+    padding: 11px 18px;
+
+    border: 2px solid #777;
+
+    border-radius: 6px;
+
+    background: #292b2e;
+
+    color: white;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        0.2s ease;
+
+}
+
+
+.category-btn:hover {
+
+    transform: translateY(-2px);
+
+    border-color: var(--silver);
+
+}
+
+
+.category-btn.active {
+
+    background: var(--burgundy);
+
+    border-color: var(--burgundy-light);
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+.search-box {
+
+    margin-bottom: 20px;
+
+}
+
+
+.search-box input {
+
+    width: 100%;
+
+    padding: 17px 20px;
+
+    border: 2px solid #777;
+
+    border-radius: 8px;
+
+    background: #242629;
+
+    color: white;
+
+    font-size: 17px;
+
+    outline: none;
+
+}
+
+
+.search-box input:focus {
+
+    border-color:
+        var(--burgundy-light);
+
+    box-shadow:
+        0 0 15px
+        rgba(158, 33, 71, 0.3);
+
+}
+
+
+.search-box input::placeholder {
+
+    color: #999;
+
+}
+
+
+/* =====================================================
+   QUESTION LIST
+===================================================== */
+
+.question-list {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 12px;
+
+}
+
+
+.question-option {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    width: 100%;
+
+    min-height: 110px;
+
+    padding: 0;
+
+    text-align: left;
+
+    border: 2px solid #666;
+
+    border-radius: 9px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #404347,
+            #222427
+        );
+
+    color: white;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.question-option:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        var(--silver);
+
+    box-shadow:
+        0 10px 25px
+        rgba(0, 0, 0, 0.4);
+
+}
+
+
+.question-option-number {
+
+    width: 80px;
+
+    min-height: 110px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background:
+        linear-gradient(
+            145deg,
+            var(--burgundy-light),
+            var(--burgundy-dark)
+        );
+
+    font-size: 30px;
+
+    font-weight: 900;
+
+}
+
+
+.question-option-content {
+
+    flex: 1;
+
+    padding: 15px 18px;
+
+}
+
+
+.question-option-category {
+
+    display: inline-block;
+
+    margin-bottom: 7px;
+
+    padding: 4px 8px;
+
+    border-radius: 4px;
+
+    background:
+        rgba(255,255,255,0.12);
+
+    color:
+        var(--silver-light);
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+
+}
+
+
+.question-option-text {
+
+    font-size: 17px;
+
+    line-height: 1.35;
+
+    font-weight: 700;
+
+}
+
+
+.question-option-answers {
+
+    margin-top: 8px;
+
+    color: #aaa;
+
+    font-size: 11px;
+
+}
+
+
+.question-option-arrow {
+
+    padding: 20px;
+
+    color: var(--silver);
+
+    font-size: 28px;
+
+    transition:
+        transform 0.2s ease;
+
+}
+
+
+.question-option:hover
+.question-option-arrow {
+
+    transform:
+        translateX(5px);
+
+}
+
+
+/* =====================================================
+   SIN RESULTADOS
+===================================================== */
+
+.no-results {
+
+    grid-column: 1 / -1;
+
+    padding: 50px;
+
+    text-align: center;
+
+    color: #aaa;
+
+    border: 2px dashed #666;
+
+    border-radius: 8px;
+
+}
+
+
+/* =====================================================
+   BOTÓN VOLVER
+===================================================== */
+
+.back-btn {
+
+    margin-top: 25px;
+
+    padding: 12px 20px;
+
+    border: 2px solid #666;
+
+    border-radius: 6px;
+
+    background: #292b2e;
+
+    color: white;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+}
+
+
+.back-btn:hover {
+
+    background: var(--burgundy);
+
+    border-color:
+        var(--burgundy-light);
+
+}
+
+
+/* =====================================================
+   MODAL BUTTONS
+===================================================== */
+
+.modal-buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 750px) {
+
+    .question-list {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .selection-header {
+
+        align-items: flex-start;
+
+    }
+
+
+    .selection-logo {
+
+        width: 60px;
+
+        height: 60px;
+
+        font-size: 20px;
+
+    }
+
+
+    .selection-header h1 {
+
+        font-size: 24px;
+
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .question-option-number {
+
+        width: 60px;
+
+        min-height: 125px;
+
+    }
+
+
+    .question-option-arrow {
+
+        display: none;
+
+    }
+
+}
