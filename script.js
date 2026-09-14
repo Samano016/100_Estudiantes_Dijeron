@@ -1,6 +1,6 @@
+```javascript
 /* =========================================================
    100 ESTUDIANTES DIJERON
-   Juego estilo concurso
    ========================================================= */
 
 
@@ -11,6 +11,8 @@
 const questions = [
 
     {
+        id: 1,
+        category: "Escuela",
         question: "Menciona algo que un estudiante hace antes de un examen.",
         answers: [
             { text: "Estudiar", points: 35 },
@@ -22,6 +24,8 @@ const questions = [
     },
 
     {
+        id: 2,
+        category: "Escuela",
         question: "Menciona algo que un estudiante lleva en su mochila.",
         answers: [
             { text: "Cuadernos", points: 30 },
@@ -33,6 +37,8 @@ const questions = [
     },
 
     {
+        id: 3,
+        category: "Vida Estudiantil",
         question: "Menciona algo que los estudiantes hacen durante el recreo.",
         answers: [
             { text: "Comer", points: 30 },
@@ -44,6 +50,8 @@ const questions = [
     },
 
     {
+        id: 4,
+        category: "Escuela",
         question: "Menciona una materia que muchos estudiantes consideran difícil.",
         answers: [
             { text: "Matemáticas", points: 40 },
@@ -55,6 +63,8 @@ const questions = [
     },
 
     {
+        id: 5,
+        category: "Vida Estudiantil",
         question: "Menciona algo que un estudiante hace cuando llega tarde a clase.",
         answers: [
             { text: "Pedir permiso para entrar", points: 30 },
@@ -66,6 +76,8 @@ const questions = [
     },
 
     {
+        id: 6,
+        category: "Escuela",
         question: "Menciona algo que los estudiantes hacen en una computadora.",
         answers: [
             { text: "Hacer tareas", points: 30 },
@@ -77,6 +89,8 @@ const questions = [
     },
 
     {
+        id: 7,
+        category: "Vida Estudiantil",
         question: "Menciona algo que un estudiante compra en la escuela.",
         answers: [
             { text: "Comida", points: 35 },
@@ -88,6 +102,8 @@ const questions = [
     },
 
     {
+        id: 8,
+        category: "Vida Estudiantil",
         question: "Menciona algo que un estudiante hace después de clases.",
         answers: [
             { text: "Ir a casa", points: 30 },
@@ -99,6 +115,8 @@ const questions = [
     },
 
     {
+        id: 9,
+        category: "Escuela",
         question: "Menciona algo que necesitas para graduarte.",
         answers: [
             { text: "Créditos", points: 35 },
@@ -110,6 +128,8 @@ const questions = [
     },
 
     {
+        id: 10,
+        category: "Escuela",
         question: "Menciona algo que un estudiante hace cuando no entiende una lección.",
         answers: [
             { text: "Pregunta al maestro", points: 35 },
@@ -121,6 +141,8 @@ const questions = [
     },
 
     {
+        id: 11,
+        category: "Vida Estudiantil",
         question: "Menciona algo que los estudiantes hacen cuando reciben buenas calificaciones.",
         answers: [
             { text: "Se sienten felices", points: 30 },
@@ -132,6 +154,8 @@ const questions = [
     },
 
     {
+        id: 12,
+        category: "Escuela",
         question: "Menciona algo que puedes encontrar en un salón de clases.",
         answers: [
             { text: "Escritorios", points: 30 },
@@ -143,6 +167,8 @@ const questions = [
     },
 
     {
+        id: 13,
+        category: "Escuela",
         question: "Menciona algo que un estudiante hace durante una presentación.",
         answers: [
             { text: "Hablar", points: 35 },
@@ -154,6 +180,8 @@ const questions = [
     },
 
     {
+        id: 14,
+        category: "Escuela",
         question: "Menciona algo que un estudiante necesita para hacer una tarea.",
         answers: [
             { text: "Computadora", points: 30 },
@@ -165,6 +193,8 @@ const questions = [
     },
 
     {
+        id: 15,
+        category: "Diversión",
         question: "Menciona algo que los estudiantes esperan durante el año escolar.",
         answers: [
             { text: "Vacaciones", points: 35 },
@@ -176,6 +206,8 @@ const questions = [
     },
 
     {
+        id: 16,
+        category: "Vida Estudiantil",
         question: "Menciona algo que un estudiante hace cuando tiene mucha tarea.",
         answers: [
             { text: "Organizarse", points: 30 },
@@ -187,6 +219,21 @@ const questions = [
     },
 
     {
+        id: 17,
+        category: "Diversión",
+        question: "Menciona algo que los estudiantes hacen durante el fin de semana.",
+        answers: [
+            { text: "Dormir", points: 30 },
+            { text: "Salir con amigos", points: 25 },
+            { text: "Jugar videojuegos", points: 20 },
+            { text: "Trabajar", points: 15 },
+            { text: "Ver películas", points: 10 }
+        ]
+    },
+
+    {
+        id: 18,
+        category: "Escuela",
         question: "Menciona algo que los estudiantes llevan a educación física.",
         answers: [
             { text: "Tenis", points: 30 },
@@ -198,6 +245,8 @@ const questions = [
     },
 
     {
+        id: 19,
+        category: "Vida Estudiantil",
         question: "Menciona algo que un estudiante hace durante el almuerzo.",
         answers: [
             { text: "Comer", points: 35 },
@@ -209,6 +258,8 @@ const questions = [
     },
 
     {
+        id: 20,
+        category: "Vida Estudiantil",
         question: "Menciona una razón por la que un estudiante puede llegar tarde.",
         answers: [
             { text: "Tráfico", points: 30 },
@@ -220,6 +271,8 @@ const questions = [
     },
 
     {
+        id: 21,
+        category: "Diversión",
         question: "Menciona algo que un estudiante puede hacer durante las vacaciones.",
         answers: [
             { text: "Viajar", points: 30 },
@@ -234,121 +287,357 @@ const questions = [
 
 
 /* =========================================================
-   VARIABLES DEL JUEGO
-   ========================================================= */
+   VARIABLES
+========================================================= */
 
-let currentQuestion = 0;
+let selectedQuestion = null;
+
 let currentAnswer = 0;
 
 let roundPoints = 0;
 
 let score1 = 0;
+
 let score2 = 0;
 
 let strikes = 0;
 
+let selectedCategory = "Todas";
+
 
 /* =========================================================
-   ELEMENTOS HTML
-   ========================================================= */
+   ELEMENTOS
+========================================================= */
 
 const startScreen =
     document.getElementById("startScreen");
+
+const questionSelectScreen =
+    document.getElementById(
+        "questionSelectScreen"
+    );
 
 const gameScreen =
     document.getElementById("gameScreen");
 
 const startGameBtn =
-    document.getElementById("startGameBtn");
+    document.getElementById(
+        "startGameBtn"
+    );
+
+const questionList =
+    document.getElementById(
+        "questionList"
+    );
+
+const questionSearch =
+    document.getElementById(
+        "questionSearch"
+    );
+
+const backToStartBtn =
+    document.getElementById(
+        "backToStartBtn"
+    );
+
+const selectQuestionBtn =
+    document.getElementById(
+        "selectQuestionBtn"
+    );
 
 const questionText =
-    document.getElementById("questionText");
+    document.getElementById(
+        "questionText"
+    );
 
 const answerBoard =
-    document.getElementById("answerBoard");
+    document.getElementById(
+        "answerBoard"
+    );
 
 const roundNumber =
-    document.getElementById("roundNumber");
+    document.getElementById(
+        "roundNumber"
+    );
 
 const questionCounter =
-    document.getElementById("questionCounter");
+    document.getElementById(
+        "questionCounter"
+    );
 
 const roundPointsDisplay =
-    document.getElementById("roundPoints");
+    document.getElementById(
+        "roundPoints"
+    );
 
 const score1Display =
-    document.getElementById("score1");
+    document.getElementById(
+        "score1"
+    );
 
 const score2Display =
-    document.getElementById("score2");
+    document.getElementById(
+        "score2"
+    );
 
 const revealBtn =
-    document.getElementById("revealBtn");
+    document.getElementById(
+        "revealBtn"
+    );
 
 const strikeBtn =
-    document.getElementById("strikeBtn");
+    document.getElementById(
+        "strikeBtn"
+    );
 
 const resetRoundBtn =
-    document.getElementById("resetRoundBtn");
-
-const nextRoundBtn =
-    document.getElementById("nextRoundBtn");
+    document.getElementById(
+        "resetRoundBtn"
+    );
 
 const roundModal =
-    document.getElementById("roundModal");
+    document.getElementById(
+        "roundModal"
+    );
 
 const modalPoints =
-    document.getElementById("modalPoints");
+    document.getElementById(
+        "modalPoints"
+    );
 
-const modalNextBtn =
-    document.getElementById("modalNextBtn");
-
-
-/* =========================================================
-   STRIKES
-   ========================================================= */
+const modalSelectBtn =
+    document.getElementById(
+        "modalSelectBtn"
+    );
 
 const strikeElements = [
 
     document.getElementById("strike1"),
+
     document.getElementById("strike2"),
+
     document.getElementById("strike3")
 
 ];
 
 
 /* =========================================================
-   INICIAR JUEGO
-   ========================================================= */
+   ABRIR SELECTOR
+========================================================= */
 
-startGameBtn.addEventListener("click", () => {
+startGameBtn.addEventListener(
+    "click",
+    () => {
 
-    startScreen.classList.add("hidden");
+        startScreen.classList.add(
+            "hidden"
+        );
 
-    gameScreen.classList.remove("hidden");
+        questionSelectScreen.classList.remove(
+            "hidden"
+        );
 
-    currentQuestion = 0;
+        renderQuestionList();
 
-    score1 = 0;
-    score2 = 0;
-
-    updateScores();
-
-    loadRound();
-
-    playSound("start");
-
-});
+    }
+);
 
 
 /* =========================================================
-   CARGAR RONDA
-   ========================================================= */
+   MOSTRAR PREGUNTAS
+========================================================= */
 
-function loadRound() {
+function renderQuestionList() {
 
-    const question =
-        questions[currentQuestion];
+    const search =
+        questionSearch.value
+            .toLowerCase()
+            .trim();
+
+    questionList.innerHTML = "";
+
+    const filteredQuestions =
+        questions.filter(question => {
+
+            const matchesCategory =
+                selectedCategory === "Todas" ||
+                question.category === selectedCategory;
+
+            const matchesSearch =
+                question.question
+                    .toLowerCase()
+                    .includes(search);
+
+            return (
+                matchesCategory &&
+                matchesSearch
+            );
+
+        });
+
+
+    if (
+        filteredQuestions.length === 0
+    ) {
+
+        questionList.innerHTML = `
+
+            <div class="no-results">
+
+                No se encontraron preguntas.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    filteredQuestions.forEach(
+        (question, index) => {
+
+            const card =
+                document.createElement("button");
+
+            card.className =
+                "question-option";
+
+            card.innerHTML = `
+
+                <div class="question-option-number">
+                    ${question.id}
+                </div>
+
+                <div class="question-option-content">
+
+                    <div class="question-option-category">
+                        ${question.category}
+                    </div>
+
+                    <div class="question-option-text">
+                        ${question.question}
+                    </div>
+
+                    <div class="question-option-answers">
+                        ${question.answers.length} respuestas
+                    </div>
+
+                </div>
+
+                <div class="question-option-arrow">
+                    →
+                </div>
+
+            `;
+
+
+            card.addEventListener(
+                "click",
+                () => {
+
+                    selectQuestion(
+                        question
+                    );
+
+                }
+            );
+
+
+            questionList.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   BUSCAR
+========================================================= */
+
+questionSearch.addEventListener(
+    "input",
+    () => {
+
+        renderQuestionList();
+
+    }
+);
+
+
+/* =========================================================
+   CATEGORÍAS
+========================================================= */
+
+document
+    .querySelectorAll(".category-btn")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(
+                        ".category-btn"
+                    )
+                    .forEach(btn => {
+
+                        btn.classList.remove(
+                            "active"
+                        );
+
+                    });
+
+
+                button.classList.add(
+                    "active"
+                );
+
+
+                selectedCategory =
+                    button.dataset.category;
+
+
+                renderQuestionList();
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   SELECCIONAR PREGUNTA
+========================================================= */
+
+function selectQuestion(question) {
+
+    selectedQuestion =
+        question;
+
+    questionSelectScreen.classList.add(
+        "hidden"
+    );
+
+    gameScreen.classList.remove(
+        "hidden"
+    );
+
+    loadQuestion();
+
+}
+
+
+/* =========================================================
+   CARGAR PREGUNTA
+========================================================= */
+
+function loadQuestion() {
 
     currentAnswer = 0;
 
@@ -357,196 +646,227 @@ function loadRound() {
     strikes = 0;
 
     questionText.textContent =
-        question.question;
+        selectedQuestion.question;
 
     roundNumber.textContent =
-        currentQuestion + 1;
+        selectedQuestion.id;
 
     questionCounter.textContent =
-        `Pregunta ${currentQuestion + 1} de ${questions.length}`;
+        `Pregunta #${selectedQuestion.id}`;
 
     roundPointsDisplay.textContent =
-        roundPoints;
+        "0";
 
     revealBtn.textContent =
         "REVELAR RESPUESTA";
 
     resetStrikes();
 
-    createAnswerBoard(
-        question.answers
-    );
+    createAnswerBoard();
 
 }
 
 
 /* =========================================================
    CREAR TABLERO
-   ========================================================= */
+========================================================= */
 
-function createAnswerBoard(answers) {
+function createAnswerBoard() {
 
     answerBoard.innerHTML = "";
 
-    answers.forEach((answer, index) => {
+    selectedQuestion.answers.forEach(
+        (answer, index) => {
 
-        const answerElement =
-            document.createElement("div");
+            const answerElement =
+                document.createElement("div");
 
-        answerElement.className =
-            "answer hidden-answer";
+            answerElement.className =
+                "answer hidden-answer";
 
-        answerElement.innerHTML = `
 
-            <div class="answer-number">
-                ${index + 1}
-            </div>
+            answerElement.innerHTML = `
 
-            <div class="answer-content">
+                <div class="answer-number">
+                    ${index + 1}
+                </div>
 
-                <span class="answer-hidden-mark">
-                    ?
-                </span>
+                <div class="answer-content">
 
-                <span class="answer-text">
-                    ${answer.text}
-                </span>
+                    <span class="answer-hidden-mark">
+                        ?
+                    </span>
 
-                <span class="answer-points">
-                    ${answer.points}
-                </span>
+                    <span class="answer-text">
+                        ${answer.text}
+                    </span>
 
-            </div>
+                    <span class="answer-points">
+                        ${answer.points}
+                    </span>
 
-        `;
+                </div>
 
-        answerBoard.appendChild(
-            answerElement
-        );
+            `;
 
-    });
+
+            answerBoard.appendChild(
+                answerElement
+            );
+
+        }
+    );
 
 }
 
 
 /* =========================================================
-   REVELAR RESPUESTA
-   ========================================================= */
+   REVELAR
+========================================================= */
 
-revealBtn.addEventListener("click", () => {
+revealBtn.addEventListener(
+    "click",
+    () => {
 
-    const answers =
-        questions[currentQuestion].answers;
+        const answers =
+            selectedQuestion.answers;
 
-    if (
-        currentAnswer >= answers.length
-    ) {
 
-        finishRound();
+        if (
+            currentAnswer >= answers.length
+        ) {
 
-        return;
+            finishRound();
+
+            return;
+
+        }
+
+
+        const answerElement =
+            answerBoard.children[
+                currentAnswer
+            ];
+
+
+        answerElement.classList.remove(
+            "hidden-answer"
+        );
+
+
+        answerElement.classList.add(
+            "revealed"
+        );
+
+
+        roundPoints +=
+            answers[currentAnswer].points;
+
+
+        roundPointsDisplay.textContent =
+            roundPoints;
+
+
+        currentAnswer++;
+
+
+        playSound("reveal");
+
+
+        if (
+            currentAnswer >= answers.length
+        ) {
+
+            revealBtn.textContent =
+                "RONDA TERMINADA";
+
+        }
 
     }
-
-    const answerElement =
-        answerBoard.children[currentAnswer];
-
-    answerElement.classList.remove(
-        "hidden-answer"
-    );
-
-    answerElement.classList.add(
-        "revealed"
-    );
-
-    roundPoints +=
-        answers[currentAnswer].points;
-
-    roundPointsDisplay.textContent =
-        roundPoints;
-
-    currentAnswer++;
-
-    playSound("reveal");
-
-    if (
-        currentAnswer >= answers.length
-    ) {
-
-        revealBtn.textContent =
-            "RONDA TERMINADA";
-
-    }
-
-});
+);
 
 
 /* =========================================================
    ERROR
-   ========================================================= */
+========================================================= */
 
-strikeBtn.addEventListener("click", () => {
+strikeBtn.addEventListener(
+    "click",
+    () => {
 
-    if (strikes >= 3) {
+        if (strikes >= 3) {
 
-        return;
+            return;
+
+        }
+
+
+        strikeElements[strikes]
+            .classList.add("active");
+
+
+        strikes++;
+
+
+        playSound("strike");
+
+
+        if (strikes === 3) {
+
+            setTimeout(
+                () => {
+
+                    finishRound();
+
+                },
+                800
+            );
+
+        }
 
     }
-
-    strikeElements[strikes]
-        .classList.add("active");
-
-    strikes++;
-
-    playSound("strike");
-
-    if (strikes === 3) {
-
-        setTimeout(() => {
-
-            finishRound();
-
-        }, 800);
-
-    }
-
-});
+);
 
 
 /* =========================================================
-   REINICIAR RONDA
-   ========================================================= */
+   REINICIAR
+========================================================= */
 
-resetRoundBtn.addEventListener("click", () => {
+resetRoundBtn.addEventListener(
+    "click",
+    () => {
 
-    loadRound();
+        loadQuestion();
 
-});
+    }
+);
 
 
 /* =========================================================
-   SIGUIENTE RONDA
-   ========================================================= */
+   CAMBIAR PREGUNTA
+========================================================= */
 
-nextRoundBtn.addEventListener("click", () => {
+selectQuestionBtn.addEventListener(
+    "click",
+    () => {
 
-    nextRound();
+        gameScreen.classList.add(
+            "hidden"
+        );
 
-});
+        questionSelectScreen.classList.remove(
+            "hidden"
+        );
 
+        renderQuestionList();
 
-modalNextBtn.addEventListener("click", () => {
-
-    roundModal.classList.add("hidden");
-
-    nextRound();
-
-});
+    }
+);
 
 
 /* =========================================================
    TERMINAR RONDA
-   ========================================================= */
+========================================================= */
 
 function finishRound() {
 
@@ -561,87 +881,54 @@ function finishRound() {
 
 
 /* =========================================================
-   SIGUIENTE PREGUNTA
-   ========================================================= */
+   MODAL → SELECTOR
+========================================================= */
 
-function nextRound() {
+modalSelectBtn.addEventListener(
+    "click",
+    () => {
 
-    currentQuestion++;
+        roundModal.classList.add(
+            "hidden"
+        );
 
-    if (
-        currentQuestion >= questions.length
-    ) {
+        gameScreen.classList.add(
+            "hidden"
+        );
 
-        showFinalScore();
+        questionSelectScreen.classList.remove(
+            "hidden"
+        );
 
-        return;
+        renderQuestionList();
 
     }
-
-    loadRound();
-
-}
+);
 
 
 /* =========================================================
-   PANTALLA FINAL
-   ========================================================= */
+   VOLVER AL INICIO
+========================================================= */
 
-function showFinalScore() {
+backToStartBtn.addEventListener(
+    "click",
+    () => {
 
-    let winner;
+        questionSelectScreen.classList.add(
+            "hidden"
+        );
 
-    if (score1 > score2) {
-
-        winner =
-            "¡GANA EL EQUIPO 1!";
-
-    } else if (score2 > score1) {
-
-        winner =
-            "¡GANA EL EQUIPO 2!";
-
-    } else {
-
-        winner =
-            "¡EMPATE!";
+        startScreen.classList.remove(
+            "hidden"
+        );
 
     }
-
-    questionText.textContent =
-        winner;
-
-    answerBoard.innerHTML = `
-
-        <div
-            style="
-                grid-column: 1 / -1;
-                text-align: center;
-                padding: 50px;
-                font-size: 45px;
-                font-weight: 900;
-            "
-        >
-
-            <div>
-                ${score1} — ${score2}
-            </div>
-
-        </div>
-
-    `;
-
-    roundPointsDisplay.textContent =
-        "FIN";
-
-    playSound("winner");
-
-}
+);
 
 
 /* =========================================================
    AGREGAR PUNTOS
-   ========================================================= */
+========================================================= */
 
 function addScore(team) {
 
@@ -651,17 +938,20 @@ function addScore(team) {
 
     }
 
+
     if (team === 1) {
 
         score1 += roundPoints;
 
     }
 
+
     if (team === 2) {
 
         score2 += roundPoints;
 
     }
+
 
     updateScores();
 
@@ -672,7 +962,7 @@ function addScore(team) {
 
 /* =========================================================
    ACTUALIZAR MARCADORES
-   ========================================================= */
+========================================================= */
 
 function updateScores() {
 
@@ -687,26 +977,28 @@ function updateScores() {
 
 /* =========================================================
    REINICIAR ERRORES
-   ========================================================= */
+========================================================= */
 
 function resetStrikes() {
 
     strikes = 0;
 
-    strikeElements.forEach(strike => {
+    strikeElements.forEach(
+        strike => {
 
-        strike.classList.remove(
-            "active"
-        );
+            strike.classList.remove(
+                "active"
+            );
 
-    });
+        }
+    );
 
 }
 
 
 /* =========================================================
-   SISTEMA DE SONIDO
-   ========================================================= */
+   SONIDOS
+========================================================= */
 
 let audioContext = null;
 
@@ -737,27 +1029,34 @@ function beep(
     const ctx =
         getAudioContext();
 
+
     const oscillator =
         ctx.createOscillator();
+
 
     const gain =
         ctx.createGain();
 
+
     oscillator.type =
         type;
 
+
     oscillator.frequency.value =
         frequency;
+
 
     gain.gain.setValueAtTime(
         0.08,
         ctx.currentTime
     );
 
+
     gain.gain.exponentialRampToValueAtTime(
         0.001,
         ctx.currentTime + duration
     );
+
 
     oscillator.connect(gain);
 
@@ -765,7 +1064,9 @@ function beep(
         ctx.destination
     );
 
+
     oscillator.start();
+
 
     oscillator.stop(
         ctx.currentTime + duration
@@ -774,28 +1075,7 @@ function beep(
 }
 
 
-/* =========================================================
-   DIFERENTES SONIDOS
-   ========================================================= */
-
 function playSound(type) {
-
-    if (type === "start") {
-
-        beep(330, 0.15);
-
-        setTimeout(
-            () => beep(440, 0.15),
-            150
-        );
-
-        setTimeout(
-            () => beep(660, 0.3),
-            300
-        );
-
-    }
-
 
     if (type === "reveal") {
 
@@ -831,43 +1111,21 @@ function playSound(type) {
 
     }
 
-
-    if (type === "winner") {
-
-        beep(440, 0.15);
-
-        setTimeout(
-            () => beep(550, 0.15),
-            150
-        );
-
-        setTimeout(
-            () => beep(660, 0.15),
-            300
-        );
-
-        setTimeout(
-            () => beep(880, 0.4),
-            450
-        );
-
-    }
-
 }
 
 
 /* =========================================================
    ATAJOS DE TECLADO
-   =========================================================
+=========================================================
 
    ESPACIO = Revelar
    X       = Error
    R       = Reiniciar
-   N       = Siguiente ronda
-   1       = Puntos Equipo 1
-   2       = Puntos Equipo 2
+   Q       = Cambiar pregunta
+   1       = Equipo 1
+   2       = Equipo 2
 
-   ========================================================= */
+========================================================= */
 
 document.addEventListener(
     "keydown",
@@ -914,10 +1172,10 @@ document.addEventListener(
 
 
         if (
-            event.key.toLowerCase() === "n"
+            event.key.toLowerCase() === "q"
         ) {
 
-            nextRoundBtn.click();
+            selectQuestionBtn.click();
 
         }
 
@@ -941,3 +1199,4 @@ document.addEventListener(
 
     }
 );
+```
